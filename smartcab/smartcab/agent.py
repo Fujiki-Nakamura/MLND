@@ -1,4 +1,6 @@
+from collections import defaultdict
 import random
+
 from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
@@ -11,6 +13,10 @@ class LearningAgent(Agent):
         self.color = 'red'  # override color
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         # TODO: Initialize any additional variables here
+        self.alpha = 0
+        self.gamma = 0
+        self.epsilon = 0
+        self.Q_hat = defaultdict(dict)
 
     def reset(self, destination=None):
         self.planner.route_to(destination)
@@ -23,14 +29,31 @@ class LearningAgent(Agent):
         deadline = self.env.get_deadline(self)
 
         # TODO: Update state
-        
+        self.state = inputs['light']
+        self.state = self.state + inputs['oncoming'] if inputs['oncoming'] else ''
+        self.state = self.state + inputs['right'] if inputs['right'] else ''
+        self.state = self.state + inputs['left'] if inputs['left'] else ''
+
         # TODO: Select action according to your policy
-        action = None
+        if random.random() < self.epsilon:  # exploit
+            if Q_hat.has_key(state):  # encountered this state previously
+                actions = self.Q_hat[state]
+                # select an action which maximize the Q value
+                action = max(actions, key=actions.get)
+            else:
+                # never encountered this state
+                action = random.choice((None, 'forward', 'left', 'right'))
+                # initialize the Q value of the state and the action with certain scalar
+                Q_hat[state][action] = 1
+        else:  # explore
+            action = random.choice((None, 'forward', 'left', 'right'))
 
         # Execute action and get reward
         reward = self.env.act(self, action)
 
         # TODO: Learn policy based on state, action, reward
+        self.Q_hat[state][action] = (1 - self.alpha) * self.Q_hat[state][action] \
+                                    + self.alpha * (reward + self.gamma * max(self.Q_hat['next_state'].values()))
 
         print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}".format(deadline, inputs, action, reward)  # [debug]
 
