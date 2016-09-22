@@ -13,9 +13,9 @@ class LearningAgent(Agent):
         self.color = 'red'  # override color
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         # TODO: Initialize any additional variables here
-        self.alpha = 0
-        self.gamma = 0
-        self.epsilon = 0
+        self.alpha = 0.5
+        self.gamma = 0.5
+        self.epsilon = 0.5
         self.Q_hat = defaultdict(dict)
 
     def reset(self, destination=None):
@@ -36,27 +36,36 @@ class LearningAgent(Agent):
 
         # TODO: Select action according to your policy
         if random.random() < self.epsilon:  # exploit
-            if Q_hat.has_key(state):  # encountered this state previously
-                actions = self.Q_hat[state]
+            if self.Q_hat.has_key(self.state):  # encountered this state previously
+                actions = self.Q_hat[self.state]
+                action_values = actions.values() if actions.values() else 0
                 # select an action which maximize the Q value
-                action = max(actions, key=actions.get)
+                action = max(action_values)
             else:
                 # never encountered this state
                 action = random.choice((None, 'forward', 'left', 'right'))
-                # initialize the Q value of the state and the action with certain scalar
-                Q_hat[state][action] = 1
+                # initialize the Q value of the state and the action with a certain value
+                self.Q_hat[self.state][action] = 0.5
         else:  # explore
             action = random.choice((None, 'forward', 'left', 'right'))
 
         # Execute action and get reward
         reward = self.env.act(self, action)
 
+        # next state
+        inputs_prime = self.env.sense(self)
+        state_prime = inputs_prime['light']
+        state_prime = state_prime + inputs_prime['oncoming'] if inputs_prime['oncoming'] else ''
+        state_prime = state_prime + inputs_prime['right'] if inputs_prime['right'] else ''
+        state_prime = state_prime + inputs_prime['left'] if inputs_prime['left'] else ''
+
         # TODO: Learn policy based on state, action, reward
-        self.Q_hat[state][action] = (1 - self.alpha) * self.Q_hat[state][action] \
-                                    + self.alpha * (reward + self.gamma * max(self.Q_hat['next_state'].values()))
+        action_prime_values = self.Q_hat[state_prime].values() if self.Q_hat[state_prime].values() else [0]
+        self.Q_hat[self.state][action] = (1 - self.alpha) * self.Q_hat[self.state].get(action, 0) \
+                                       + self.alpha * (reward + self.gamma * max(action_prime_values))
 
         print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}".format(deadline, inputs, action, reward)  # [debug]
-
+        print self.Q_hat
 
 def run():
     """Run the agent for a finite number of trials."""
