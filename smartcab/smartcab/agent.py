@@ -30,17 +30,19 @@ class LearningAgent(Agent):
 
         # TODO: Update state
         self.state = inputs['light']
-        self.state = self.state + inputs['oncoming'] if inputs['oncoming'] else ''
-        self.state = self.state + inputs['right'] if inputs['right'] else ''
-        self.state = self.state + inputs['left'] if inputs['left'] else ''
+        self.state += inputs['oncoming'] if inputs['oncoming'] else 'None'
+        self.state += inputs['right'] if inputs['right'] else 'None'
+        self.state += inputs['left'] if inputs['left'] else 'None'
 
         # TODO: Select action according to your policy
         if random.random() < self.epsilon:  # exploit
             if self.Q_hat.has_key(self.state):  # encountered this state previously
-                actions = self.Q_hat[self.state]
-                action_values = actions.values() if actions.values() else 0
                 # select an action which maximize the Q value
-                action = max(action_values)
+                actions = self.Q_hat[self.state]
+                try:
+                    action = max(actions, key=actions.get)
+                except ValueError:  # when there is no action corresponding to the state
+                    action = random.choice((None, 'forward', 'left', 'right'))
             else:
                 # never encountered this state
                 action = random.choice((None, 'forward', 'left', 'right'))
@@ -77,7 +79,7 @@ def run():
     # NOTE: You can set enforce_deadline=False while debugging to allow longer trials
 
     # Now simulate it
-    sim = Simulator(e, update_delay=0.5, display=True)  # create simulator (uses pygame when display=True, if available)
+    sim = Simulator(e, update_delay=0.1, display=False)  # create simulator (uses pygame when display=True, if available)
     # NOTE: To speed up simulation, reduce update_delay and/or set display=False
 
     sim.run(n_trials=100)  # run for a specified number of trials
