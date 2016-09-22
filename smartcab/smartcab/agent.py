@@ -14,7 +14,7 @@ class LearningAgent(Agent):
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         # TODO: Initialize any additional variables here
         self.alpha = 0.5
-        self.gamma = 0.5
+        self.gamma = 0.9
         self.epsilon = 0.5
         self.Q_hat = defaultdict(dict)
 
@@ -29,9 +29,10 @@ class LearningAgent(Agent):
         deadline = self.env.get_deadline(self)
 
         # TODO: Update state
-        self.state = inputs['light']
+        self.state = self.next_waypoint if self.next_waypoint else 'None'
+        self.state += inputs['light'] if inputs['light'] else 'None'
         self.state += inputs['oncoming'] if inputs['oncoming'] else 'None'
-        self.state += inputs['right'] if inputs['right'] else 'None'
+        # self.state += inputs['right'] if inputs['right'] else 'None'
         self.state += inputs['left'] if inputs['left'] else 'None'
 
         # TODO: Select action according to your policy
@@ -44,10 +45,10 @@ class LearningAgent(Agent):
                 except ValueError:  # when there is no action corresponding to the state
                     action = random.choice((None, 'forward', 'left', 'right'))
             else:
-                # never encountered this state
+                # never encountered this state before
                 action = random.choice((None, 'forward', 'left', 'right'))
                 # initialize the Q value of the state and the action with a certain value
-                self.Q_hat[self.state][action] = 0.5
+                # self.Q_hat[self.state][action] = 0.5
         else:  # explore
             action = random.choice((None, 'forward', 'left', 'right'))
 
@@ -79,7 +80,7 @@ def run():
     # NOTE: You can set enforce_deadline=False while debugging to allow longer trials
 
     # Now simulate it
-    sim = Simulator(e, update_delay=0.1, display=False)  # create simulator (uses pygame when display=True, if available)
+    sim = Simulator(e, update_delay=0.5, display=True)  # create simulator (uses pygame when display=True, if available)
     # NOTE: To speed up simulation, reduce update_delay and/or set display=False
 
     sim.run(n_trials=100)  # run for a specified number of trials
