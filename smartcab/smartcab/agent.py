@@ -16,11 +16,13 @@ class LearningAgent(Agent):
         self.alpha = 0.5
         self.gamma = 0.9
         self.epsilon = 0.5
-        self.Q_hat = defaultdict(dict)
+        self.Q_table = defaultdict(dict)
+        self.cumulative_reward = 0
 
     def reset(self, destination=None):
         self.planner.route_to(destination)
         # TODO: Prepare for a new trip; reset any variables here, if required
+        self.cumulative_reward = 0
 
     def update(self, t):
         # Gather inputs
@@ -29,17 +31,16 @@ class LearningAgent(Agent):
         deadline = self.env.get_deadline(self)
 
         # TODO: Update state
-        self.state = self.next_waypoint if self.next_waypoint else 'None'
-        self.state += inputs['light'] if inputs['light'] else 'None'
-        self.state += inputs['oncoming'] if inputs['oncoming'] else 'None'
-        # self.state += inputs['right'] if inputs['right'] else 'None'
-        self.state += inputs['left'] if inputs['left'] else 'None'
+        self.state = self.update_state(self.next_waypoint,
+                                       inputs['light'],
+                                       inputs['oncoming'],
+                                       inputs['left'])
 
         # TODO: Select action according to your policy
         if random.random() < self.epsilon:  # exploit
-            if self.Q_hat.has_key(self.state):  # encountered this state previously
+            if self.Q_table.has_key(self.state):  # encountered this state previously
                 # select an action which maximize the Q value
-                actions = self.Q_hat[self.state]
+                actions = self.Q_table[self.state]
                 try:
                     action = max(actions, key=actions.get)
                 except ValueError:  # when there is no action corresponding to the state
@@ -48,27 +49,38 @@ class LearningAgent(Agent):
                 # never encountered this state before
                 action = random.choice((None, 'forward', 'left', 'right'))
                 # initialize the Q value of the state and the action with a certain value
-                # self.Q_hat[self.state][action] = 0.5
+                # self.Q_table[self.state][action] = 0.5
         else:  # explore
             action = random.choice((None, 'forward', 'left', 'right'))
 
         # Execute action and get reward
         reward = self.env.act(self, action)
+        self.cumulative_reward += reward
 
         # next state
+        next_waypoint_prime = self.planner.next_waypoint()
         inputs_prime = self.env.sense(self)
-        state_prime = inputs_prime['light']
-        state_prime = state_prime + inputs_prime['oncoming'] if inputs_prime['oncoming'] else ''
-        state_prime = state_prime + inputs_prime['right'] if inputs_prime['right'] else ''
-        state_prime = state_prime + inputs_prime['left'] if inputs_prime['left'] else ''
+        state_prime = self.update_state(next_waypoint_prime,
+                                        inputs_prime['light'],
+                                        inputs_prime['oncoming'],
+                                        inputs_prime['left'])
 
         # TODO: Learn policy based on state, action, reward
-        action_prime_values = self.Q_hat[state_prime].values() if self.Q_hat[state_prime].values() else [0]
-        self.Q_hat[self.state][action] = (1 - self.alpha) * self.Q_hat[self.state].get(action, 0) \
+        action_prime_values = self.Q_table[state_prime].values() if self.Q_table[state_prime].values() else [0]
+        self.Q_table[self.state][action] = (1 - self.alpha) * self.Q_table[self.state].get(action, 0) \
                                        + self.alpha * (reward + self.gamma * max(action_prime_values))
 
-        print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}".format(deadline, inputs, action, reward)  # [debug]
-        print self.Q_hat
+        print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, cumulative_reward = {}".format(deadline, inputs, action, reward, self.cumulative_reward)  # [debug]
+        # print self.Q_table [debug]
+        print self.state
+        print state_prime
+
+    def update_state(self, *args):
+        state = ''
+        for arg in args:
+            state += arg if arg else 'None'
+        return state
+
 
 def run():
     """Run the agent for a finite number of trials."""
@@ -80,7 +92,7 @@ def run():
     # NOTE: You can set enforce_deadline=False while debugging to allow longer trials
 
     # Now simulate it
-    sim = Simulator(e, update_delay=0.5, display=True)  # create simulator (uses pygame when display=True, if available)
+    sim = Simulator(e, update_delay=0.3, display=True)  # create simulator (uses pygame when display=True, if available)
     # NOTE: To speed up simulation, reduce update_delay and/or set display=False
 
     sim.run(n_trials=100)  # run for a specified number of trials
