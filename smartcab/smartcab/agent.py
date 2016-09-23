@@ -13,9 +13,9 @@ class LearningAgent(Agent):
         self.color = 'red'  # override color
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         # TODO: Initialize any additional variables here
-        self.alpha = 0.5
-        self.gamma = 0.9
-        self.epsilon = 0.5
+        self.alpha = 0.2
+        self.gamma = 0.2
+        self.epsilon = 0.1
         self.Q_table = defaultdict(dict)
         self.cumulative_reward = 0
         self.n_success = 0
