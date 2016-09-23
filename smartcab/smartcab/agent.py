@@ -73,9 +73,10 @@ class LearningAgent(Agent):
                                          + self.alpha * (reward + self.gamma * max(action_prime_values))
 
         print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, cumulative_reward = {}".format(deadline, inputs, action, reward, self.cumulative_reward)  # [debug]
-        # print self.Q_table [debug]
-        print self.state
-        print state_prime
+        # print self.Q_table # [debug]
+        # print self.state # [debug]
+        # print state_prime # [debug]
+        # print self.n_success # [debug]
 
     def update_state(self, *args):
         state = ''
