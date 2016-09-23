@@ -38,7 +38,9 @@ class LearningAgent(Agent):
                                        inputs['left'])
 
         # TODO: Select action according to your policy
-        if random.random() < self.epsilon:  # exploit
+        if random.random() < self.epsilon:  # explore
+            action = random.choice((None, 'forward', 'left', 'right'))
+        else:  # exploit
             if self.Q_table.has_key(self.state):  # encountered this state previously
                 # select an action which maximize the Q value
                 actions = self.Q_table[self.state]
