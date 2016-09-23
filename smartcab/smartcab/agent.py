@@ -70,7 +70,7 @@ class LearningAgent(Agent):
         # TODO: Learn policy based on state, action, reward
         action_prime_values = self.Q_table[state_prime].values() if self.Q_table[state_prime].values() else [0]
         self.Q_table[self.state][action] = (1 - self.alpha) * self.Q_table[self.state].get(action, 0) \
-                                       + self.alpha * (reward + self.gamma * max(action_prime_values))
+                                         + self.alpha * (reward + self.gamma * max(action_prime_values))
 
         print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, cumulative_reward = {}".format(deadline, inputs, action, reward, self.cumulative_reward)  # [debug]
         # print self.Q_table [debug]
