@@ -18,6 +18,7 @@ class LearningAgent(Agent):
         self.epsilon = 0.5
         self.Q_table = defaultdict(dict)
         self.cumulative_reward = 0
+        self.n_success = 0
 
     def reset(self, destination=None):
         self.planner.route_to(destination)
@@ -50,11 +51,10 @@ class LearningAgent(Agent):
                 action = random.choice((None, 'forward', 'left', 'right'))
                 # initialize the Q value of the state and the action with a certain value
                 # self.Q_table[self.state][action] = 0.5
-        else:  # explore
-            action = random.choice((None, 'forward', 'left', 'right'))
 
         # Execute action and get reward
         reward = self.env.act(self, action)
+        self.n_success += 1 if reward == 12 else 0
         self.cumulative_reward += reward
 
         # next state
