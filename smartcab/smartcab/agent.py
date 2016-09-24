@@ -29,21 +29,18 @@ class LearningAgent(Agent):
         # TODO: Prepare for a new trip; reset any variables here, if required
         self.cumulative_reward = 0
         n_success_list.append(self.n_success)
-        self.deadline_for_each_trial = self.env.get_deadline(self)
 
     def update(self, t):
         # Gather inputs
         self.next_waypoint = self.planner.next_waypoint()  # from route planner, also displayed by simulator
         inputs = self.env.sense(self)
         deadline = self.env.get_deadline(self)
-        deadline_state = 'near' if deadline < 0.5 * self.deadline_for_each_trial else 'far'
 
         # TODO: Update state
         self.state = self.update_state(self.next_waypoint,
                                        inputs['light'],
                                        inputs['oncoming'],
-                                       inputs['left'],
-                                       deadline_state)
+                                       inputs['left'])
 
         # TODO: Select action according to your policy
         if random.random() < self.epsilon:  # explore
@@ -72,20 +69,17 @@ class LearningAgent(Agent):
         # next state
         next_waypoint_prime = self.planner.next_waypoint()
         inputs_prime = self.env.sense(self)
-        deadline_prime = self.env.get_deadline(self)
-        deadline_state_prime = 'near' if deadline_prime < 0.5 * self.deadline_for_each_trial else 'far'
         state_prime = self.update_state(next_waypoint_prime,
                                         inputs_prime['light'],
                                         inputs_prime['oncoming'],
-                                        inputs_prime['left'],
-                                        deadline_state_prime)
+                                        inputs_prime['left'])
 
         # TODO: Learn policy based on state, action, reward
         action_prime_values = self.Q_table[state_prime].values() if self.Q_table[state_prime].values() else [0]
         self.Q_table[self.state][action] = (1 - self.alpha) * self.Q_table[self.state].get(action, 0) \
                                          + self.alpha * (reward + self.gamma * max(action_prime_values))
 
-        print "LearningAgent.update(): deadline = {}, deadline_state = {}, inputs = {}, action = {}, reward = {}, cumulative_reward = {}".format(deadline, deadline_state, inputs, action, reward, self.cumulative_reward)  # [debug]
+        print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}, cumulative_reward = {}".format(deadline, inputs, action, reward, self.cumulative_reward)  # [debug]
         # print self.Q_table # [debug]
         # print self.state # [debug]
         # print state_prime # [debug]
