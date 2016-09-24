@@ -6,6 +6,9 @@ from planner import RoutePlanner
 from simulator import Simulator
 
 
+n_success_list = []  # Count the cumularive number of the agent's success
+
+
 class LearningAgent(Agent):
     """An agent that learns to drive in the smartcab world."""
 
@@ -25,6 +28,7 @@ class LearningAgent(Agent):
         self.planner.route_to(destination)
         # TODO: Prepare for a new trip; reset any variables here, if required
         self.cumulative_reward = 0
+        n_success_list.append(self.n_success)
 
     def update(self, t):
         # Gather inputs
@@ -59,6 +63,7 @@ class LearningAgent(Agent):
         # Execute action and get reward
         reward = self.env.act(self, action)
         self.n_success += 1 if reward == 12 else 0
+        n_success_list.append(n_success) if reward == 12 else None
         self.cumulative_reward += reward
 
         # next state
@@ -102,6 +107,8 @@ def run():
 
     sim.run(n_trials=100)  # run for a specified number of trials
     # NOTE: To quit midway, press Esc or close pygame window, or hit Ctrl+C on the command-line
+
+    print n_success_list  # [debug]
 
 
 if __name__ == '__main__':
