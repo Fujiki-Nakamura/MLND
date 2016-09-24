@@ -81,10 +81,10 @@ class LearningAgent(Agent):
         # print self.n_success # [debug]
 
     def update_state(self, *args):
-        state = ''
+        state_list = []
         for arg in args:
-            state += arg if arg else 'None'
-        return state
+            state_list.append(arg)
+        return tuple(state_list)
 
 
 def run():
