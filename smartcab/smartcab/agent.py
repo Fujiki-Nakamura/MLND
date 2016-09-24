@@ -52,6 +52,7 @@ class LearningAgent(Agent):
             else:
                 # never encountered this state before
                 action = random.choice((None, 'forward', 'left', 'right'))
+                # NOTE: I didn't choose the codes below.
                 # initialize the Q value of the state and the action with a certain value
                 # self.Q_table[self.state][action] = 0.5
 
