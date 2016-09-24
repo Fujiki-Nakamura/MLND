@@ -5,6 +5,10 @@ from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
 
+
+n_success_list = []  # Count the cumularive number of the agent's success
+
+
 class LearningAgent(Agent):
     """An agent that learns to drive in the smartcab world."""
 
@@ -24,6 +28,7 @@ class LearningAgent(Agent):
         self.planner.route_to(destination)
         # TODO: Prepare for a new trip; reset any variables here, if required
         self.cumulative_reward = 0
+        n_success_list.append(self.n_success)
 
     def update(self, t):
         # Gather inputs
@@ -51,12 +56,14 @@ class LearningAgent(Agent):
             else:
                 # never encountered this state before
                 action = random.choice((None, 'forward', 'left', 'right'))
+                # NOTE: I didn't choose the codes below.
                 # initialize the Q value of the state and the action with a certain value
                 # self.Q_table[self.state][action] = 0.5
 
         # Execute action and get reward
         reward = self.env.act(self, action)
         self.n_success += 1 if reward == 12 else 0
+        n_success_list.append(n_success) if reward == 12 else None
         self.cumulative_reward += reward
 
         # next state
@@ -79,10 +86,10 @@ class LearningAgent(Agent):
         # print self.n_success # [debug]
 
     def update_state(self, *args):
-        state = ''
+        state_list = []
         for arg in args:
-            state += arg if arg else 'None'
-        return state
+            state_list.append(arg)
+        return tuple(state_list)
 
 
 def run():
@@ -100,6 +107,8 @@ def run():
 
     sim.run(n_trials=100)  # run for a specified number of trials
     # NOTE: To quit midway, press Esc or close pygame window, or hit Ctrl+C on the command-line
+
+    print n_success_list  # [debug]
 
 
 if __name__ == '__main__':
