@@ -9,6 +9,6 @@ xgb_params = {
     'gamma': 0,
     'silent': 1,
     'verbose_eval': True,
-    'seed': 2016,
-    'nthreads': 4
+    'seed': 0,
+    'nthreads': 8
 }

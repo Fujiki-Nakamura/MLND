@@ -10,13 +10,14 @@ import xgboost as xgb
 from parameters import xgb_params
 
 
-RANDOM_STATE = 2016
-shift = 0
+RANDOM_STATE = 0
+shift = 200
+fair_obj_constant = 2
 
 
 def create_train_test_joined():
-    train = pd.read_csv('./data/train_lexicographical.csv')
-    test = pd.read_csv('./data/test_lexicographical.csv')
+    train = pd.read_csv('./data/train_preprocessed.csv')
+    test = pd.read_csv('./data/test_preprocessed.csv')
     test['loss'] = np.nan
 
     return train, test
@@ -24,7 +25,7 @@ def create_train_test_joined():
 
 def fair_objective(preds, dtrain):
     labels = dtrain.get_label()
-    con = 2
+    con = fair_obj_constant
     x = preds - labels
     grad = con * x / (np.abs(x) + con)
     hess = con**2 / (np.abs(x) + con)**2
@@ -69,7 +70,7 @@ if __name__ == '__main__':
            maximize=False,
            obj=fair_objective)
     print('CV in ', time.time() - t0)
-    cv.to_csv('./CSV/xgb_CV_result.csv')
+    cv.to_csv('./result/xgb_CV_result.csv')
     print('End Cross Validation')
 
     cv_mean = cv.iloc[-1, 0]
@@ -82,3 +83,24 @@ if __name__ == '__main__':
     dt1 = datetime.datetime.today()
     print('End at ', dt1)
     print(dt1 - dt0)
+
+
+    # Train for test
+    print('Start training')
+    t0 = time.time()
+    gbdt = \
+    xgb.train(xgb_params,
+              dtrain,
+              best_num_rounds,
+              feval=evalerror,
+              obj=fair_objective,
+              )
+    print('Trained in ', time.time() - t0)
+
+    # Prediction for test data
+    prediction = np.exp(gbdt.predict(dtest)) - shift
+
+    submission = pd.DataFrame()
+    submission['id'] = test['id']
+    submission['loss'] = prediction
+    submission.to_csv('./result/submission_xgb.csv', index=False)
