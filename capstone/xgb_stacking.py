@@ -63,7 +63,7 @@ if __name__ == '__main__':
         # Out of fold prediction
         out_of_fold_preds = np.exp(gbdt.predict(dtest_prime)) - shift
         # Save the out-of-fold prediction
-        with open('./result/preds_out_of_fold_{}.npy'.format(i), 'wb') as f:
+        with open('./data/preds_out_of_fold_{}.npy'.format(i), 'wb') as f:
             np.save(f, out_of_fold_preds)
 
         # temporal prediction
@@ -71,7 +71,6 @@ if __name__ == '__main__':
         df_preds_tmp['fold_{}'.format(i)] = preds_tmp
 
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
-        import pdb; pdb.set_trace()
 
     # Save the temporal predictions
     df_preds_tmp.to_csv(temporal_preds_csv)
