@@ -1,8 +1,12 @@
 # coding: UTF-8
+import numpy as np
+import pandas as pd
+import xgboost as xgb
+
 fair_obj_constant = 2
 
 
-def load_data(path_to_train, path_to_test_data):
+def load_data(path_to_train_data, path_to_test_data):
     train = pd.read_csv(path_to_train_data)
     test = pd.read_csv(path_to_test_data)
 
