@@ -13,6 +13,14 @@ def load_data(path_to_train_data, path_to_test_data):
     return train, test
 
 
+def create_features_and_labels(train, test):
+    X_train = train.drop(['loss', 'id'], axis=1)
+    y_train = train['loss']
+    X_test = test.drop(['loss', 'id'], axis=1)
+
+    return X_train.values, y_train.values, X_test.values
+
+
 def create_dtrain_dtest(train, test):
     y = train['loss']
     X = train.drop(['loss', 'id'], axis=1)
