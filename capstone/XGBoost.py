@@ -70,8 +70,7 @@ if __name__ == '__main__':
     gbdt = \
     xgb.train(xgb_params,
               dtrain,
-              num_boost_round=num_boost_round,
-              early_stopping_rounds=early_stopping_rounds,
+              num_boost_round=best_num_rounds,
               feval=evalerror,
               obj=fair_objective,
               )
