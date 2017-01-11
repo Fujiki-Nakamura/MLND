@@ -27,7 +27,7 @@ train_data = './data/train_preprocessed.csv'
 test_data = './data/test_preprocessed.csv'
 
 # XGBoost parameters
-num_boost_round = 577
+num_boost_round = 3000 # best num round for param #1 is around 3000
 #early_stopping_rounds = 10 early_stopping_rounds parameter causes an error in train
 #verbose_eval = 100
 # KFold parameter
