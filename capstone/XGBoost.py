@@ -8,51 +8,30 @@ from sklearn.metrics import mean_absolute_error
 import xgboost as xgb
 
 from parameters import xgb_params
+from utils import load_data
+from utils import create_dtrain_dtest
+from utils import evalerror
+from utils import fair_objective
 
+
+train_data = './data/train_preprocessed.csv'
+test_data = './data/test_preprocessed.csv'
 
 RANDOM_STATE = 0
 shift = 200
-fair_obj_constant = 2
 
-
-def create_train_test_joined():
-    train = pd.read_csv('./data/train_preprocessed.csv')
-    test = pd.read_csv('./data/test_preprocessed.csv')
-    test['loss'] = np.nan
-
-    return train, test
-
-
-def fair_objective(preds, dtrain):
-    labels = dtrain.get_label()
-    con = fair_obj_constant
-    x = preds - labels
-    grad = con * x / (np.abs(x) + con)
-    hess = con**2 / (np.abs(x) + con)**2
-    return grad, hess
-
-
-def evalerror(preds, dtrain):
-    labels = dtrain.get_label()
-    return 'mae', mean_absolute_error(np.exp(preds), np.exp(labels))
-
-
-def create_dtrain_dtest(train, test):
-    y = np.log(train['loss'] + shift)
-    X = train.drop(['loss', 'id'], 1)
-    X_test = test.drop(['loss', 'id'], 1)
-
-    dtrain = xgb.DMatrix(X, label=y)
-    dtest = xgb.DMatrix(X_test)
-
-    return dtrain, dtest
+# parameters for XGB Cross Validation
+num_boost_round = 10000
+early_stopping_rounds = 10
+verbose_eval = 100
+nfold = 5
 
 
 if __name__ == '__main__':
     dt0 = datetime.datetime.today()
     print('Start at ', dt0)
 
-    train, test = create_train_test_joined()
+    train, test = load_data(train_data, test_data)
     dtrain, dtest = create_dtrain_dtest(train, test)
 
     print('Start Cross Validation')
@@ -60,11 +39,11 @@ if __name__ == '__main__':
     cv = \
     xgb.cv(xgb_params,
            dtrain,
-           num_boost_round=10000,
-           nfold=5,
+           num_boost_round=num_boost_round,
+           nfold=nfold,
            stratified=False,
-           early_stopping_rounds=100,
-           verbose_eval=100,
+           early_stopping_rounds=early_stopping_rounds,
+           verbose_eval=verbose_eval,
            show_stdv=True,
            feval=evalerror,
            maximize=False,
@@ -91,7 +70,8 @@ if __name__ == '__main__':
     gbdt = \
     xgb.train(xgb_params,
               dtrain,
-              best_num_rounds,
+              num_boost_round=num_boost_round,
+              early_stopping_rounds=early_stopping_rounds,
               feval=evalerror,
               obj=fair_objective,
               )
