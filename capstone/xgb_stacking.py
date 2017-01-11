@@ -1,3 +1,4 @@
+import argparse
 import datetime
 import time
 
@@ -16,6 +17,12 @@ from utils import fair_objective
 from utils import load_data
 
 
+# Argument 'model_name' is used as stacked predictions of out-of-fold predictions
+parser = argparse.ArgumentParser()
+parser.add_argument('model_name', metavar='model_name', type=str)
+args = parser.parse_args()
+model_name = args.model_name
+
 train_data = './data/train_preprocessed.csv'
 test_data = './data/test_preprocessed.csv'
 
@@ -27,6 +34,10 @@ num_boost_round = 577
 n_splits = 5
 
 shift = 200
+
+out_of_fold_preds_list = []
+df_stacked_out_of_fold_preds = pd.DataFrame()
+stacked_preds_csv = './result/stacked_preds_{}.csv'.format(model_name)
 
 df_preds_tmp = pd.DataFrame()
 temporal_preds_csv = './result/temporal_preds_xgb.csv'
@@ -62,9 +73,8 @@ if __name__ == '__main__':
 
         # Out of fold prediction
         out_of_fold_preds = np.exp(gbdt.predict(dtest_prime)) - shift
-        # Save the out-of-fold prediction
-        with open('./data/preds_out_of_fold_{}.npy'.format(i), 'wb') as f:
-            np.save(f, out_of_fold_preds)
+        # Hold this prediction and save them later
+        out_of_fold_preds_list.append(out_of_fold_preds)
 
         # temporal prediction
         preds_tmp = np.exp(gbdt.predict(dtest)) - shift
@@ -72,5 +82,9 @@ if __name__ == '__main__':
 
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
 
+    # Save the stacked out-of-fold predictions
+    df_stacked_out_of_fold_preds[model_name] = np.concatenate(out_of_fold_preds_list)
+    df_stacked_out_of_fold_preds\
+    .to_csv(stacked_preds_csv, index=False)
     # Save the temporal predictions
     df_preds_tmp.to_csv(temporal_preds_csv)
