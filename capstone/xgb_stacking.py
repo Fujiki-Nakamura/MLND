@@ -40,7 +40,7 @@ df_stacked_out_of_fold_preds = pd.DataFrame()
 stacked_preds_csv = './result/stacked_preds_{}.csv'.format(model_name)
 
 df_preds_tmp = pd.DataFrame()
-temporal_preds_csv = './result/temporal_preds_xgb.csv'
+temporal_preds_csv = './result/temporal_preds_{}.csv'.format(model_name)
 
 
 if __name__ == '__main__':
