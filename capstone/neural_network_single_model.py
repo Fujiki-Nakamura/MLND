@@ -69,7 +69,7 @@ if __name__ == '__main__':
             ) - shift
         trues = np.exp(y_val) - shift
         df_val_score.loc[i, 'val_loss'] = mean_absolute_error(trues, preds)
-        break
+
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
 
     # save the validation scores
