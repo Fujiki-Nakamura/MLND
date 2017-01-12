@@ -3,4 +3,4 @@
 __MACOSX/
 *.pyc
 *data/
-env/
+MLNDEnv/
