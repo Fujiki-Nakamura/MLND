@@ -27,9 +27,9 @@ train_data = './data/train_preprocessed.csv'
 test_data = './data/test_preprocessed.csv'
 
 # XGBoost parameters
-num_boost_round = 3000 # best num round for param #1 is around 3000
-#early_stopping_rounds = 10 early_stopping_rounds parameter causes an error in train
-#verbose_eval = 100
+num_boost_round = 10000
+early_stopping_rounds = 10
+verbose_eval = 100
 # KFold parameter
 n_splits = 5
 
@@ -59,14 +59,17 @@ if __name__ == '__main__':
         y_train_prime, y_test_prime = y_train[train_index], y_train[test_index]
 
         dtrain_prime = xgb.DMatrix(X_train_prime, label=y_train_prime)
-        dtest_prime = xgb.DMatrix(X_test_prime)
+        dtest_prime = xgb.DMatrix(X_test_prime, label=y_test_prime)
+
+        watch_list = [(dtrain_prime, 'train_prime'), (dtest_prime, 'test_prime')]
 
         gbdt = \
         xgb.train(xgb_params,
                   dtrain_prime,
                   num_boost_round=num_boost_round,
-                  #early_stopping_rounds=early_stopping_rounds,
-                  #verbose_eval=verbose_eval,
+                  early_stopping_rounds=early_stopping_rounds,
+                  watchlist=watch_list,
+                  verbose_eval=verbose_eval,
                   feval=evalerror,
                   obj=fair_objective,
                   )
