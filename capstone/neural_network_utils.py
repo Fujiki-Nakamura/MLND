@@ -24,5 +24,5 @@ def predict_batch_generator(X, batch_size):
 
 
 # TODO: Perhaps something wrong
-def mean_absolute_error(y_true, y_pred):
+def modified_mean_absolute_error(y_true, y_pred):
     return K.mean(K.abs(K.exp(y_pred) - K.exp(y_true)), axis=-1)
