@@ -20,7 +20,7 @@ n_splits = 5
 
 # NN params
 batch_size = 128
-nb_epoch = 1
+nb_epoch = 10
 
 # Argument 'model_name' is used as stacked predictions of out-of-fold predictions
 parser = argparse.ArgumentParser()
