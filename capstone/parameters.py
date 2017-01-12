@@ -8,6 +8,6 @@ xgb_params = {
     'lambda': 1,
     'gamma': 1,
     'silent': 1,
-    'seed': 0,
+    'seed': 2017,
     'nthreads': -1
 }
