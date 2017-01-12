@@ -73,6 +73,9 @@ if __name__ == '__main__':
                   feval=evalerror,
                   obj=fair_objective,
                   )
+        print('best_score', gbdt.best_score)
+        print('best_iteration', gbdt.best_iteration)
+        print('best_ntree_limit', gbdt.best_ntree_limit)
 
         # Out of fold prediction
         out_of_fold_preds = \
