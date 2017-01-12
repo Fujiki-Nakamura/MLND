@@ -75,12 +75,15 @@ if __name__ == '__main__':
                   )
 
         # Out of fold prediction
-        out_of_fold_preds = np.exp(gbdt.predict(dtest_prime)) - shift
+        out_of_fold_preds = \
+        gbdt.predict(dtest_prime, ntree_limit=gbdt.best_ntree_limit)
+        out_of_fold_preds = np.exp(out_of_fold_preds) - shift
         # Hold this prediction and save them later
         out_of_fold_preds_list.append(out_of_fold_preds)
 
         # temporal prediction
-        preds_tmp = np.exp(gbdt.predict(dtest)) - shift
+        preds_tmp = gbdt.predict(dtest, ntree_limit=gbdt.best_ntree_limit)
+        preds_tmp = np.exp(preds_tmp) - shift
         df_preds_tmp['fold_{}'.format(i)] = preds_tmp
 
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
