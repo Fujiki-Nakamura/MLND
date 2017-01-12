@@ -73,5 +73,5 @@ if __name__ == '__main__':
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
 
     # save the validation scores
-    csv_file_name = './result/cross_validation_{}.csv'.format(model_name)
+    csv_file_name = './result/cross_validation_neural_net.csv'.format(model_name)
     df_val_score.to_csv(csv_file_name, index=False)
