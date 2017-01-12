@@ -4,7 +4,7 @@ from keras.layers import Dense, Dropout, Activation
 from keras.layers.normalization import BatchNormalization
 from keras.layers.advanced_activations import PReLU
 
-from neural_network_utils import mean_absolute_error
+from neural_network_utils import modified_mean_absolute_error
 
 
 def create_model(input_dim):
@@ -25,6 +25,7 @@ def create_model(input_dim):
     # output layer
     model.add(Dense(1))
 
+    # TODO: want loss to be modified_mean_absolute_error
     model.compile(loss='mae', optimizer='adam')
 
     return model
