@@ -68,7 +68,7 @@ if __name__ == '__main__':
                   dtrain_prime,
                   num_boost_round=num_boost_round,
                   early_stopping_rounds=early_stopping_rounds,
-                  watchlist=watch_list,
+                  evals=watch_list,
                   verbose_eval=verbose_eval,
                   feval=evalerror,
                   obj=fair_objective,
