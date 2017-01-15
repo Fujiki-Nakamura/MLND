@@ -7,6 +7,10 @@ from keras.layers.advanced_activations import PReLU
 from neural_network_utils import modified_mean_absolute_error
 
 
+def create_model(input_dim):
+    return nn_4_layer(input_dim)
+
+
 def nn_4_layer(input_dim):
     model = Sequential()
 
@@ -30,7 +34,7 @@ def nn_4_layer(input_dim):
     return model
 
 
-def create_model(input_dim):
+def keras_starter(input_dim):
     # NOTE: model from
     # https://www.kaggle.com/mtinti/allstate-claims-severity/keras-starter-with-bagging-1111-84364
     model = Sequential()

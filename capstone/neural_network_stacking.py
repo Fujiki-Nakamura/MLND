@@ -1,10 +1,12 @@
 # coding: UTF-8
 import argparse
+import os
 import time
 
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import KFold
+from sklearn.metrics import mean_absolute_error
 
 from utils import load_data
 from utils import create_features_and_labels
@@ -20,7 +22,7 @@ n_splits = 5
 
 # NN params
 batch_size = 128
-nb_epoch = 10
+nb_epoch = 50
 
 # Argument 'model_name' is used as stacked predictions of out-of-fold predictions
 parser = argparse.ArgumentParser()
@@ -36,11 +38,13 @@ X_train, y_train, X_test = create_features_and_labels(df_train, df_test)
 
 df_stacked_out_of_fold_preds = pd.DataFrame()
 df_stacked_out_of_fold_preds['id'] = df_train['id']
-stacked_preds_csv = './result/stacked_preds_{}.csv'.format(model_name)
 
 df_temporal_preds = pd.DataFrame()
 df_temporal_preds['id'] = df_test['id']
-temporal_preds_csv = './result/temporal_preds_{}.csv'.format(model_name)
+
+df_history = pd.DataFrame()
+
+df_cross_validation = pd.DataFrame()
 
 # placeholder
 out_of_fold_preds = np.zeros(X_train.shape[0])
@@ -72,16 +76,23 @@ if __name__ == '__main__':
             validation_data=(X_test_prime, y_test_prime))
 
         # Save the history
-        df_history = pd.DataFrame(history.history)
-        df_history.to_csv('./result/{}_fold_{}_history.csv'.format(model_name, str(i)), index=False)
+        df_history['loss_fold_{}'.format(i)] = history.history['loss']
+        df_history['val_loss_fold_{}'.format(i)] = history.history['val_loss']
 
-        # Out of fold prediction
-        out_of_fold_preds[test_index] = \
+        # prediction
+        preds = \
             np.exp(
                 model.predict_generator(
                     generator=predict_batch_generator(X_test_prime, batch_size),
                     val_samples=X_test_prime.shape[0]).reshape(-1)
             ) - shift
+
+        # cross validation result
+        trues = np.exp(y_test_prime) - shift
+        df_cross_validation.loc[i, 'val_loss'] = mean_absolute_error(trues, preds)
+
+        # Out of fold prediction
+        out_of_fold_preds[test_index] = preds
 
         # temporal prediction
         temporal_preds = \
@@ -94,14 +105,22 @@ if __name__ == '__main__':
 
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
 
+    result_directory = './{}/result/'.format(model_name)
+    if not os.path.exists(result_directory):
+        os.makedirs(result_directory)
+    # Save the history
+    df_history.to_csv(result_directory + 'history.csv', index=False)
+    # Save the cross validation results
+    df_cross_validation.to_csv(result_directory + 'cross_validation.csv', index=False)
     # Save the stacked out-of-fold predictions
     df_stacked_out_of_fold_preds[model_name] = out_of_fold_preds
-    df_stacked_out_of_fold_preds.to_csv(stacked_preds_csv, index=False)
+    df_stacked_out_of_fold_preds.to_csv(result_directory + 'stacked_preds.csv', index=False)
     # Save the temporal predictions
-    df_temporal_preds.to_csv(temporal_preds_csv)
-
+    df_temporal_preds.to_csv(result_directory + 'temporal_preds.csv', index=False)
     # Save the model architecture
-    with open('./models/{}.json'.format(model_name), 'w') as f:
+    model_path = './{}/model.json'.format(model_name)
+    with open(model_path, 'w') as f:
         f.write(model.to_json())
     # Save the model weights
-    model.save_weights('./models/{}_weights.h5'.format(model_name))
+    weights_path = './{}/weights.h5'.format(model_name)
+    model.save_weights(weights_path)
