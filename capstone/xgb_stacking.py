@@ -36,6 +36,8 @@ n_splits = 5
 
 shift = 200
 
+df_cross_validation = pd.DataFrame()
+
 out_of_fold_preds_list = []
 df_stacked_out_of_fold_preds = pd.DataFrame()
 
@@ -77,11 +79,21 @@ if __name__ == '__main__':
         print('best_ntree_limit', gbdt.best_ntree_limit)
 
         # Out of fold prediction
-        out_of_fold_preds = \
+        preds = \
         gbdt.predict(dtest_prime, ntree_limit=gbdt.best_ntree_limit)
-        out_of_fold_preds = np.exp(out_of_fold_preds) - shift
+        out_of_fold_preds = np.exp(preds) - shift
         # Hold this prediction and save them later
         out_of_fold_preds_list.append(out_of_fold_preds)
+
+        trues = np.exp(y_test_prime) - shift
+        df_cross_validation.loc[i, 'val_mae'] = mean_absolute_error(trues, out_of_fold_preds)
+
+        preds_train = \
+            np.exp(gbdt.predict(dtrain_prime, ntree_limit=gbdt.best_ntree_limit))\
+            - shift
+        trues_train = np.exp(y_train_prime) - shift
+        df_cross_validation.loc[i, 'train_mae'] = \
+            mean_absolute_error(trues_train, preds_train)
 
         # temporal prediction
         preds_tmp = gbdt.predict(dtest, ntree_limit=gbdt.best_ntree_limit)
@@ -93,6 +105,8 @@ if __name__ == '__main__':
     result_directory = './{}/result/'.format(model_name)
     if not os.path.exists(result_directory):
         os.makedirs(result_directory)
+    # Save the cross validation result
+    df_cross_validation.to_csv(result_directory + 'cross_validation.csv', index=False)
     # Save the stacked out-of-fold predictions
     df_stacked_out_of_fold_preds[model_name] = np.concatenate(out_of_fold_preds_list)
     df_stacked_out_of_fold_preds\
