@@ -19,7 +19,7 @@ def nn_2_layer(input_dim):
 
     model.add(Dense(1))
 
-    model.compile(loss='mae', optimizer='adam')
+    model.compile(loss=modified_mean_absolute_error, optimizer='adam')
 
     return model
 
