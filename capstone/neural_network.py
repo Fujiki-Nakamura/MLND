@@ -11,6 +11,19 @@ def create_model(input_dim):
     return nn_4_layer(input_dim)
 
 
+def nn_2_layer(input_dim):
+    model = Sequential()
+
+    model.add(Dense(128, input_dim=input_dim))
+    model.add(Activation('relu'))
+
+    model.add(Dense(1))
+
+    model.compile(loss='mae', optimizer='adam')
+
+    return model
+
+
 def nn_4_layer(input_dim):
     model = Sequential()
 
