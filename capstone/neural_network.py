@@ -8,7 +8,7 @@ from neural_network_utils import modified_mean_absolute_error
 
 
 def create_model(input_dim):
-    return nn_4_layer(input_dim)
+    return nn_2_layer(input_dim)
 
 
 def nn_2_layer(input_dim):
