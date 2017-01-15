@@ -10,7 +10,7 @@ from sklearn.model_selection import KFold
 from utils import load_data
 from utils import create_features_and_labels
 
-from neural_network import create_model
+from neural_network import nn_4_layer
 from neural_network_utils import fit_batch_generator
 from neural_network_utils import predict_batch_generator
 
@@ -21,7 +21,7 @@ shift = 200
 n_splits = 10
 # NN param
 batch_size = 128
-nb_epoch = 30
+nb_epoch = 50
 
 # Argument 'model_name' is used as stacked predictions of out-of-fold predictions
 parser = argparse.ArgumentParser()
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
         # create model
         input_dim = X_train_prime.shape[1]
-        model = create_model(input_dim)
+        model = nn_4_layer(input_dim)
 
         # model training
         history = model.fit_generator(
