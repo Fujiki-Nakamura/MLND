@@ -1,6 +1,5 @@
 # coding; UTF-8
 from keras import backend as K
-import tensorflow as tf
 
 
 def fit_batch_generator(X, y, batch_size):
@@ -24,5 +23,6 @@ def predict_batch_generator(X, batch_size):
             yield X_batch
 
 
+# TODO: Perhaps something wrong
 def modified_mean_absolute_error(y_true, y_pred):
-    return tf.reduce_mean(tf.abs(tf.exp(y_pred) - tf.exp(y_true)))
+    return K.mean(K.abs(K.exp(y_pred) - K.exp(y_true)), axis=-1)
