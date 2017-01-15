@@ -1,5 +1,6 @@
 import argparse
 import datetime
+import os
 import time
 
 import pandas as pd
@@ -37,10 +38,8 @@ shift = 200
 
 out_of_fold_preds_list = []
 df_stacked_out_of_fold_preds = pd.DataFrame()
-stacked_preds_csv = './result/stacked_preds_{}.csv'.format(model_name)
 
 df_preds_tmp = pd.DataFrame()
-temporal_preds_csv = './result/temporal_preds_{}.csv'.format(model_name)
 
 
 if __name__ == '__main__':
@@ -91,9 +90,12 @@ if __name__ == '__main__':
 
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
 
+    result_directory = './{}/result/'.format(model_name)
+    if not os.path.exists(result_directory):
+        os.makedirs(result_directory)
     # Save the stacked out-of-fold predictions
     df_stacked_out_of_fold_preds[model_name] = np.concatenate(out_of_fold_preds_list)
     df_stacked_out_of_fold_preds\
-    .to_csv(stacked_preds_csv, index=False)
+        .to_csv(result_directory + 'stacked_preds.csv', index=False)
     # Save the temporal predictions
-    df_preds_tmp.to_csv(temporal_preds_csv)
+    df_preds_tmp.to_csv(result_directory + 'temporal_preds.csv')
