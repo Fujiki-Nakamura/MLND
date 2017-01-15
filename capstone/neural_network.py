@@ -29,15 +29,15 @@ def nn_4_layer(input_dim):
 
     model.add(Dense(256, input_dim=input_dim))
     model.add(Activation('relu'))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.3))
 
     model.add(Dense(128))
     model.add(Activation('relu'))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.3))
 
     model.add(Dense(64))
     model.add(Activation('relu'))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.3))
 
     # output layer
     model.add(Dense(1))
