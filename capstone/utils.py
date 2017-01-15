@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.metrics import mean_absolute_error
 import xgboost as xgb
 
-fair_obj_constant = 2
+fair_obj_constant = 1
 
 
 def load_data(path_to_train_data, path_to_test_data):
