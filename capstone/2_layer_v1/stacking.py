@@ -74,18 +74,19 @@ if __name__ == '__main__':
         model = create_model(input_dim)
 
         # model training
-        history = model.fit(
-            X_train_prime,
-            y_train_prime,
-            batch_size=batch_size,
+        history = model.fit_generator(
+            generator=fit_batch_generator(X_train_prime, y_train_prime, batch_size),
             nb_epoch=nb_epoch,
+            samples_per_epoch=X_train_prime.shape[0],
             verbose=1,
             validation_data=(X_test_prime, y_test_prime),
             callbacks=[early_stopping])
 
         # prediction
         preds = \
-            model.predict(X_test_prime, batch_size=batch_size).reshape(-1)
+            model.predict_generator(
+                generator=predict_batch_generator(X_test_prime, batch_size),
+                val_samples=X_test_prime.shape[0]).reshape(-1)
 
         # cross validation result
         trues = y_test_prime
@@ -96,7 +97,9 @@ if __name__ == '__main__':
 
         # temporal prediction
         temporal_preds = \
-            model.predict(X_test, batch_size=batch_size).reshape(-1)
+            model.predict_generator(
+                generator=predict_batch_generator(X_test, batch_size),
+                val_samples=X_test.shape[0]).reshape(-1)
         df_temporal_preds['fold_{}'.format(i)] = temporal_preds
 
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
