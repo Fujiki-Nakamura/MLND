@@ -11,8 +11,8 @@ def make_data_one_hot():
     train_one_hot = pd.get_dummies(train)
     test_one_hot = pd.get_dummies(test)
 
-    train_removed_one_hot.to_csv('./data/train_one_hot.csv', index=False)
-    test_removed_one_hot.to_csv('./data/test_one_hot.csv', index=False)
+    train_one_hot.to_csv('./data/train_one_hot.csv', index=False)
+    test_one_hot.to_csv('./data/test_one_hot.csv', index=False)
 
 
 def make_data_removed_and_factorized():
