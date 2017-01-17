@@ -1,5 +1,6 @@
 # coding: UTF-8
 import argparse
+import gc
 import os
 import sys
 import time
@@ -83,14 +84,12 @@ if __name__ == '__main__':
 
         # prediction
         preds = \
-            np.exp(
-                model.predict_generator(
-                    generator=predict_batch_generator(X_test_prime, batch_size),
-                    val_samples=X_test_prime.shape[0]).reshape(-1)
-            ) - shift
+            model.predict_generator(
+                generator=predict_batch_generator(X_test_prime, batch_size),
+                val_samples=X_test_prime.shape[0]).reshape(-1)
 
         # cross validation result
-        trues = np.exp(y_test_prime) - shift
+        trues = y_test_prime
         df_cross_validation.loc[i, 'val_loss'] = mean_absolute_error(trues, preds)
 
         # Out of fold prediction
@@ -98,11 +97,9 @@ if __name__ == '__main__':
 
         # temporal prediction
         temporal_preds = \
-            np.exp(
-                model.predict_generator(
-                    generator=predict_batch_generator(X_test, batch_size),
-                    val_samples=X_test.shape[0]).reshape(-1)
-            ) - shift
+            model.predict_generator(
+                generator=predict_batch_generator(X_test, batch_size),
+                val_samples=X_test.shape[0]).reshape(-1)
         df_temporal_preds['fold_{}'.format(i)] = temporal_preds
 
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
@@ -124,3 +121,5 @@ if __name__ == '__main__':
     # Save the model weights
     weights_path = './weights.h5'
     model.save_weights(weights_path)
+
+    gc.collect()
