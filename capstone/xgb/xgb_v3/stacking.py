@@ -105,7 +105,7 @@ if __name__ == '__main__':
         os.makedirs(result_directory)
     # Save the CV result
     print('mean MAE on CV = ', df_cross_validation['val_mae'].mean())
-    df_cross_validation.to_csv(result_directory + 'cross_validation', index=False)
+    df_cross_validation.to_csv(result_directory + 'cross_validation.csv', index=False)
     # Save the stacked out-of-fold predictions
     df_stacked_out_of_fold_preds[model_name] = out_of_fold_preds
     df_stacked_out_of_fold_preds.to_csv(result_directory + 'stacked_preds.csv', index=False)
