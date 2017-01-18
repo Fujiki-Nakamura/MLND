@@ -34,7 +34,7 @@ train, test = load_data(train_data, test_data)
 X_train, y_train, X_test = create_features_and_labels(train, test)
 
 # XGBoost parameters
-num_boost_round = 10
+num_boost_round = 10000
 early_stopping_rounds = 10
 verbose_eval = 100
 
@@ -98,7 +98,6 @@ if __name__ == '__main__':
         df_preds_tmp['fold_{}'.format(i)] = preds_tmp
 
         print('End Fold {} in {} s'.format(i, time.time() - t0_fold))
-        break
 
     result_directory = './result/'
     if not os.path.exists(result_directory):
