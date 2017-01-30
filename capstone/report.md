@@ -35,11 +35,11 @@ This is a problem of regression because the target value (, which is the severit
   </li>
   <li>
     Tuning the models:
-    </br>
+    </br>enhance the performence of the models built in step 3. Tune the hyperparameter of the models, make the better architecture of the models and so on.
   </li>
   <li>
     Ensembling the models:
-    </br>To achive better performance than single model,
+    </br>To achive the better performance than the single models above, ensumble them introduce the method of stacking.
   </li>
 </ol>
 
@@ -47,6 +47,7 @@ This is a problem of regression because the target value (, which is the severit
 
 <h3>Metrics</h3>
 <p>&nbsp;&nbsp;
+The metric to measure the performences is [Mean Absolute Error (MAE)](https://en.wikipedia.org/wiki/Mean_absolute_error). In addition to the fact that the competition requires MAE as the metric, MAE is appropriate because it measures the difference between predicted values and ground truth values directly. Of course, other metrics like MSE or RMSE seem appropriate but they have a "side effect" which we don't want here. When they square the differences, they make bigger errors bigger and smaller errors smaller (More precisely, when squared, errors more than 1 have bigger impact on the total error and errors less than 1 have smaller). MAE is one of the appropriate metrics to measure how much the difference is between the monetary values and to handle all errors equally, and interpreting the difference is intuitively easy (e.g How much differs from the true cost).
 </p>
 
 <h2 align="center">Analysis</h2>
