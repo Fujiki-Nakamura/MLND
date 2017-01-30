@@ -1,0 +1,173 @@
+Start Fold 1
+[0]	train_prime-rmse:6.74162	test_prime-rmse:6.73804	train_prime-mae:3235.57	test_prime-mae:3229.44
+Multiple eval metrics have been passed: 'test_prime-mae' will be used for early stopping.
+
+Will train until test_prime-mae hasn't improved in 10 rounds.
+[100]	train_prime-rmse:0.76864	test_prime-rmse:0.766136	train_prime-mae:1751.51	test_prime-mae:1742.45
+[200]	train_prime-rmse:0.522215	test_prime-rmse:0.525355	train_prime-mae:1266.35	test_prime-mae:1270.32
+[300]	train_prime-rmse:0.482678	test_prime-rmse:0.489396	train_prime-mae:1163.56	test_prime-mae:1178.8
+[400]	train_prime-rmse:0.474025	test_prime-rmse:0.482747	train_prime-mae:1136.29	test_prime-mae:1158.54
+[500]	train_prime-rmse:0.470549	test_prime-rmse:0.480608	train_prime-mae:1124.49	test_prime-mae:1151.17
+[600]	train_prime-rmse:0.468134	test_prime-rmse:0.479294	train_prime-mae:1116.59	test_prime-mae:1146.6
+[700]	train_prime-rmse:0.466559	test_prime-rmse:0.4785	train_prime-mae:1111.35	test_prime-mae:1143.76
+[800]	train_prime-rmse:0.465153	test_prime-rmse:0.477862	train_prime-mae:1106.93	test_prime-mae:1141.68
+[900]	train_prime-rmse:0.463946	test_prime-rmse:0.477339	train_prime-mae:1103.31	test_prime-mae:1140.05
+[1000]	train_prime-rmse:0.462877	test_prime-rmse:0.476896	train_prime-mae:1100	test_prime-mae:1138.66
+[1100]	train_prime-rmse:0.461957	test_prime-rmse:0.476543	train_prime-mae:1097.26	test_prime-mae:1137.61
+[1200]	train_prime-rmse:0.461198	test_prime-rmse:0.47631	train_prime-mae:1094.97	test_prime-mae:1136.89
+[1300]	train_prime-rmse:0.460497	test_prime-rmse:0.476082	train_prime-mae:1092.97	test_prime-mae:1136.15
+[1400]	train_prime-rmse:0.459876	test_prime-rmse:0.475867	train_prime-mae:1091.12	test_prime-mae:1135.52
+[1500]	train_prime-rmse:0.459234	test_prime-rmse:0.475668	train_prime-mae:1089.31	test_prime-mae:1134.95
+[1600]	train_prime-rmse:0.458621	test_prime-rmse:0.475501	train_prime-mae:1087.55	test_prime-mae:1134.44
+[1700]	train_prime-rmse:0.458114	test_prime-rmse:0.475353	train_prime-mae:1086.07	test_prime-mae:1133.95
+[1800]	train_prime-rmse:0.457615	test_prime-rmse:0.475225	train_prime-mae:1084.63	test_prime-mae:1133.56
+[1900]	train_prime-rmse:0.457175	test_prime-rmse:0.475125	train_prime-mae:1083.4	test_prime-mae:1133.23
+[2000]	train_prime-rmse:0.45671	test_prime-rmse:0.475025	train_prime-mae:1082.07	test_prime-mae:1132.93
+[2100]	train_prime-rmse:0.456283	test_prime-rmse:0.474928	train_prime-mae:1080.84	test_prime-mae:1132.63
+Stopping. Best iteration:
+[2132]	train_prime-rmse:0.456125	test_prime-rmse:0.474892	train_prime-mae:1080.39	test_prime-mae:1132.49
+
+best_score 1132.49231
+best_iteration 2132
+best_ntree_limit 2133
+End Fold 1 in 451.8500380516052 s
+Start Fold 2
+[0]	train_prime-rmse:6.74088	test_prime-rmse:6.74306	train_prime-mae:3234.13	test_prime-mae:3235.18
+Multiple eval metrics have been passed: 'test_prime-mae' will be used for early stopping.
+
+Will train until test_prime-mae hasn't improved in 10 rounds.
+[100]	train_prime-rmse:0.769089	test_prime-rmse:0.771003	train_prime-mae:1751.6	test_prime-mae:1755.16
+[200]	train_prime-rmse:0.522667	test_prime-rmse:0.526194	train_prime-mae:1266.52	test_prime-mae:1276.92
+[300]	train_prime-rmse:0.483217	test_prime-rmse:0.488212	train_prime-mae:1164.61	test_prime-mae:1179.13
+[400]	train_prime-rmse:0.474531	test_prime-rmse:0.48088	train_prime-mae:1137.42	test_prime-mae:1155.62
+[500]	train_prime-rmse:0.471047	test_prime-rmse:0.478552	train_prime-mae:1125.66	test_prime-mae:1147.25
+[600]	train_prime-rmse:0.468805	test_prime-rmse:0.477329	train_prime-mae:1118.35	test_prime-mae:1142.91
+[700]	train_prime-rmse:0.467046	test_prime-rmse:0.47643	train_prime-mae:1112.7	test_prime-mae:1139.78
+[800]	train_prime-rmse:0.465622	test_prime-rmse:0.475806	train_prime-mae:1108.24	test_prime-mae:1137.69
+[900]	train_prime-rmse:0.464465	test_prime-rmse:0.475313	train_prime-mae:1104.75	test_prime-mae:1136.1
+[1000]	train_prime-rmse:0.46332	test_prime-rmse:0.474891	train_prime-mae:1101.31	test_prime-mae:1134.7
+[1100]	train_prime-rmse:0.462389	test_prime-rmse:0.474583	train_prime-mae:1098.49	test_prime-mae:1133.59
+[1200]	train_prime-rmse:0.461604	test_prime-rmse:0.474341	train_prime-mae:1096.12	test_prime-mae:1132.77
+[1300]	train_prime-rmse:0.460884	test_prime-rmse:0.474125	train_prime-mae:1094	test_prime-mae:1132.13
+[1400]	train_prime-rmse:0.460225	test_prime-rmse:0.47395	train_prime-mae:1092.1	test_prime-mae:1131.6
+[1500]	train_prime-rmse:0.459631	test_prime-rmse:0.473801	train_prime-mae:1090.36	test_prime-mae:1131.12
+[1600]	train_prime-rmse:0.459015	test_prime-rmse:0.473671	train_prime-mae:1088.59	test_prime-mae:1130.72
+[1700]	train_prime-rmse:0.458512	test_prime-rmse:0.473568	train_prime-mae:1087.12	test_prime-mae:1130.42
+[1800]	train_prime-rmse:0.457996	test_prime-rmse:0.473464	train_prime-mae:1085.62	test_prime-mae:1130.15
+Stopping. Best iteration:
+[1851]	train_prime-rmse:0.457736	test_prime-rmse:0.473405	train_prime-mae:1084.86	test_prime-mae:1129.98
+
+best_score 1129.984741
+best_iteration 1851
+best_ntree_limit 1852
+End Fold 2 in 392.94458413124084 s
+Start Fold 3
+[0]	train_prime-rmse:6.74078	test_prime-rmse:6.74346	train_prime-mae:3231.77	test_prime-mae:3244.63
+Multiple eval metrics have been passed: 'test_prime-mae' will be used for early stopping.
+
+Will train until test_prime-mae hasn't improved in 10 rounds.
+[100]	train_prime-rmse:0.76804	test_prime-rmse:0.77652	train_prime-mae:1748.42	test_prime-mae:1766.95
+[200]	train_prime-rmse:0.521464	test_prime-rmse:0.5322	train_prime-mae:1263.1	test_prime-mae:1291.29
+[300]	train_prime-rmse:0.481968	test_prime-rmse:0.4937	train_prime-mae:1161.16	test_prime-mae:1193.73
+[400]	train_prime-rmse:0.473293	test_prime-rmse:0.486012	train_prime-mae:1134.13	test_prime-mae:1169.67
+[500]	train_prime-rmse:0.469747	test_prime-rmse:0.483474	train_prime-mae:1122.23	test_prime-mae:1160.71
+[600]	train_prime-rmse:0.467473	test_prime-rmse:0.482149	train_prime-mae:1114.76	test_prime-mae:1155.88
+[700]	train_prime-rmse:0.465775	test_prime-rmse:0.48124	train_prime-mae:1109.32	test_prime-mae:1152.6
+[800]	train_prime-rmse:0.464381	test_prime-rmse:0.480606	train_prime-mae:1104.87	test_prime-mae:1150.28
+[900]	train_prime-rmse:0.463236	test_prime-rmse:0.480109	train_prime-mae:1101.39	test_prime-mae:1148.59
+[1000]	train_prime-rmse:0.462058	test_prime-rmse:0.479645	train_prime-mae:1097.83	test_prime-mae:1147
+[1100]	train_prime-rmse:0.461129	test_prime-rmse:0.479343	train_prime-mae:1095	test_prime-mae:1145.95
+[1200]	train_prime-rmse:0.460383	test_prime-rmse:0.479133	train_prime-mae:1092.73	test_prime-mae:1145.16
+[1300]	train_prime-rmse:0.459678	test_prime-rmse:0.478905	train_prime-mae:1090.73	test_prime-mae:1144.49
+[1400]	train_prime-rmse:0.45902	test_prime-rmse:0.478734	train_prime-mae:1088.86	test_prime-mae:1143.9
+[1500]	train_prime-rmse:0.458398	test_prime-rmse:0.478588	train_prime-mae:1087.05	test_prime-mae:1143.41
+[1600]	train_prime-rmse:0.457852	test_prime-rmse:0.478436	train_prime-mae:1085.39	test_prime-mae:1142.82
+[1700]	train_prime-rmse:0.457349	test_prime-rmse:0.478345	train_prime-mae:1083.96	test_prime-mae:1142.49
+[1800]	train_prime-rmse:0.456859	test_prime-rmse:0.478237	train_prime-mae:1082.51	test_prime-mae:1142.09
+[1900]	train_prime-rmse:0.456399	test_prime-rmse:0.478129	train_prime-mae:1081.17	test_prime-mae:1141.73
+[2000]	train_prime-rmse:0.455955	test_prime-rmse:0.47806	train_prime-mae:1079.88	test_prime-mae:1141.44
+[2100]	train_prime-rmse:0.455491	test_prime-rmse:0.477991	train_prime-mae:1078.6	test_prime-mae:1141.18
+[2200]	train_prime-rmse:0.455074	test_prime-rmse:0.477911	train_prime-mae:1077.42	test_prime-mae:1140.89
+[2300]	train_prime-rmse:0.454683	test_prime-rmse:0.477853	train_prime-mae:1076.34	test_prime-mae:1140.7
+[2400]	train_prime-rmse:0.454287	test_prime-rmse:0.477785	train_prime-mae:1075.17	test_prime-mae:1140.45
+[2500]	train_prime-rmse:0.453936	test_prime-rmse:0.477739	train_prime-mae:1074.19	test_prime-mae:1140.29
+Stopping. Best iteration:
+[2514]	train_prime-rmse:0.453889	test_prime-rmse:0.477733	train_prime-mae:1074.05	test_prime-mae:1140.26
+
+best_score 1140.256104
+best_iteration 2514
+best_ntree_limit 2515
+End Fold 3 in 532.9321231842041 s
+Start Fold 4
+[0]	train_prime-rmse:6.74348	test_prime-rmse:6.74342	train_prime-mae:3233.16	test_prime-mae:3239.1
+Multiple eval metrics have been passed: 'test_prime-mae' will be used for early stopping.
+
+Will train until test_prime-mae hasn't improved in 10 rounds.
+[100]	train_prime-rmse:0.768417	test_prime-rmse:0.771279	train_prime-mae:1748.88	test_prime-mae:1758.64
+[200]	train_prime-rmse:0.522137	test_prime-rmse:0.529134	train_prime-mae:1264.88	test_prime-mae:1284.92
+[300]	train_prime-rmse:0.482794	test_prime-rmse:0.492325	train_prime-mae:1163.38	test_prime-mae:1189.03
+[400]	train_prime-rmse:0.474302	test_prime-rmse:0.485542	train_prime-mae:1137.11	test_prime-mae:1166.89
+[500]	train_prime-rmse:0.470847	test_prime-rmse:0.483389	train_prime-mae:1126	test_prime-mae:1159.1
+[600]	train_prime-rmse:0.468457	test_prime-rmse:0.482149	train_prime-mae:1118.47	test_prime-mae:1154.67
+[700]	train_prime-rmse:0.46667	test_prime-rmse:0.481308	train_prime-mae:1112.89	test_prime-mae:1151.63
+[800]	train_prime-rmse:0.465267	test_prime-rmse:0.480686	train_prime-mae:1108.44	test_prime-mae:1149.27
+[900]	train_prime-rmse:0.464095	test_prime-rmse:0.480226	train_prime-mae:1104.89	test_prime-mae:1147.61
+[1000]	train_prime-rmse:0.463035	test_prime-rmse:0.479819	train_prime-mae:1101.69	test_prime-mae:1146.15
+[1100]	train_prime-rmse:0.46214	test_prime-rmse:0.479511	train_prime-mae:1098.98	test_prime-mae:1145.05
+[1200]	train_prime-rmse:0.461271	test_prime-rmse:0.479221	train_prime-mae:1096.34	test_prime-mae:1144.07
+[1300]	train_prime-rmse:0.460556	test_prime-rmse:0.479011	train_prime-mae:1094.28	test_prime-mae:1143.3
+[1400]	train_prime-rmse:0.45986	test_prime-rmse:0.478829	train_prime-mae:1092.25	test_prime-mae:1142.64
+[1500]	train_prime-rmse:0.459189	test_prime-rmse:0.478665	train_prime-mae:1090.25	test_prime-mae:1142.03
+[1600]	train_prime-rmse:0.458584	test_prime-rmse:0.478497	train_prime-mae:1088.49	test_prime-mae:1141.44
+[1700]	train_prime-rmse:0.458022	test_prime-rmse:0.478388	train_prime-mae:1086.83	test_prime-mae:1140.96
+[1800]	train_prime-rmse:0.457493	test_prime-rmse:0.478292	train_prime-mae:1085.28	test_prime-mae:1140.59
+[1900]	train_prime-rmse:0.457004	test_prime-rmse:0.478177	train_prime-mae:1083.85	test_prime-mae:1140.18
+[2000]	train_prime-rmse:0.4565	test_prime-rmse:0.478066	train_prime-mae:1082.4	test_prime-mae:1139.83
+[2100]	train_prime-rmse:0.456047	test_prime-rmse:0.477991	train_prime-mae:1081.13	test_prime-mae:1139.59
+[2200]	train_prime-rmse:0.455613	test_prime-rmse:0.47791	train_prime-mae:1079.88	test_prime-mae:1139.33
+[2300]	train_prime-rmse:0.455235	test_prime-rmse:0.477837	train_prime-mae:1078.79	test_prime-mae:1139.08
+Stopping. Best iteration:
+[2367]	train_prime-rmse:0.454948	test_prime-rmse:0.477789	train_prime-mae:1077.98	test_prime-mae:1138.92
+
+best_score 1138.917725
+best_iteration 2367
+best_ntree_limit 2368
+End Fold 4 in 501.48145508766174 s
+Start Fold 5
+[0]	train_prime-rmse:6.74416	test_prime-rmse:6.74335	train_prime-mae:3237.09	test_prime-mae:3223.38
+Multiple eval metrics have been passed: 'test_prime-mae' will be used for early stopping.
+
+Will train until test_prime-mae hasn't improved in 10 rounds.
+[100]	train_prime-rmse:0.768965	test_prime-rmse:0.770178	train_prime-mae:1753.03	test_prime-mae:1747.2
+[200]	train_prime-rmse:0.522672	test_prime-rmse:0.526649	train_prime-mae:1268.26	test_prime-mae:1271.48
+[300]	train_prime-rmse:0.483403	test_prime-rmse:0.489089	train_prime-mae:1166.27	test_prime-mae:1176.76
+[400]	train_prime-rmse:0.47495	test_prime-rmse:0.481945	train_prime-mae:1139.69	test_prime-mae:1154.49
+[500]	train_prime-rmse:0.47151	test_prime-rmse:0.479552	train_prime-mae:1128.27	test_prime-mae:1146.32
+[600]	train_prime-rmse:0.469277	test_prime-rmse:0.478288	train_prime-mae:1121.09	test_prime-mae:1142.06
+[700]	train_prime-rmse:0.467505	test_prime-rmse:0.477327	train_prime-mae:1115.34	test_prime-mae:1138.82
+[800]	train_prime-rmse:0.466085	test_prime-rmse:0.476627	train_prime-mae:1110.91	test_prime-mae:1136.57
+[900]	train_prime-rmse:0.464926	test_prime-rmse:0.476073	train_prime-mae:1107.3	test_prime-mae:1134.69
+[1000]	train_prime-rmse:0.463792	test_prime-rmse:0.475618	train_prime-mae:1103.87	test_prime-mae:1133.2
+[1100]	train_prime-rmse:0.462773	test_prime-rmse:0.475235	train_prime-mae:1100.86	test_prime-mae:1131.94
+[1200]	train_prime-rmse:0.461929	test_prime-rmse:0.474924	train_prime-mae:1098.37	test_prime-mae:1130.91
+[1300]	train_prime-rmse:0.461223	test_prime-rmse:0.474705	train_prime-mae:1096.3	test_prime-mae:1130.2
+[1400]	train_prime-rmse:0.46052	test_prime-rmse:0.474492	train_prime-mae:1094.14	test_prime-mae:1129.46
+[1500]	train_prime-rmse:0.459867	test_prime-rmse:0.474294	train_prime-mae:1092.13	test_prime-mae:1128.81
+[1600]	train_prime-rmse:0.459263	test_prime-rmse:0.474127	train_prime-mae:1090.3	test_prime-mae:1128.23
+[1700]	train_prime-rmse:0.458719	test_prime-rmse:0.474012	train_prime-mae:1088.69	test_prime-mae:1127.83
+[1800]	train_prime-rmse:0.458204	test_prime-rmse:0.473927	train_prime-mae:1087.21	test_prime-mae:1127.55
+[1900]	train_prime-rmse:0.457704	test_prime-rmse:0.473822	train_prime-mae:1085.78	test_prime-mae:1127.22
+[2000]	train_prime-rmse:0.457252	test_prime-rmse:0.473737	train_prime-mae:1084.47	test_prime-mae:1126.92
+[2100]	train_prime-rmse:0.456767	test_prime-rmse:0.473649	train_prime-mae:1083.07	test_prime-mae:1126.57
+[2200]	train_prime-rmse:0.456331	test_prime-rmse:0.473566	train_prime-mae:1081.84	test_prime-mae:1126.32
+[2300]	train_prime-rmse:0.455937	test_prime-rmse:0.473492	train_prime-mae:1080.69	test_prime-mae:1126.06
+Stopping. Best iteration:
+[2302]	train_prime-rmse:0.455928	test_prime-rmse:0.47349	train_prime-mae:1080.67	test_prime-mae:1126.05
+
+best_score 1126.052002
+best_iteration 2302
+best_ntree_limit 2303
+End Fold 5 in 487.5217978954315 s
+mean MAE on CV =  1133.54058131
+15025.49user 17.58system 39:37.21elapsed 632%CPU (0avgtext+0avgdata 1924348maxresident)k
+495880inputs+32096outputs (90major+16239049minor)pagefaults 0swaps
