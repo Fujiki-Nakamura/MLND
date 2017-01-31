@@ -55,8 +55,21 @@ The metric to measure the performances is [Mean Absolute Error (MAE)](https://en
 
 <h3>Data Exploration</h3>
 <p>&nbsp;&nbsp;
+The dataset consists of 188,318 training data and 125,546 test data. The training data has 132 features and the test data has 131 features. The difference is a feature of `loss`, which means the cost of the insurance claims. The training data has it but the test data does not. The feature `loss` is our target variable and our predictions have to be as close as possible to that value. The mean of the `loss` is 3037.34 and it turns out that the average cost is $3037.34. The standard deviation is 2904.09, the minimum is 0.67, the maximum is 121012.2, and the median is 2115.57.
+</p>
+<p>&nbsp;&nbsp;
+The other feature that the models don't need in their training process is `id`. As its name suggests, it identifies the each row of the each dataset. We have 188,318 `id`s in training data and 125,546 in test data.
+</p>
+<p>&nbsp;&nbsp;
+The main features of our dataset are continuous features and categorical features. In our Machine Learning step, we feed these two types of features into our models. We have 116 categorical features and 14 continuous features. However, we don't know the meanings of these features. The Allstate prepared the dataset really well, and all the features we need to build models are anonymized. This is the characteristic of this problem. We have to achieve the best performance without human intuitions.
+</p>
+<p>&nbsp;&nbsp;
+The categorical features are named from `cat1` to `cat116`, and they have at least two values represented in the uppercase alphabet. For example, `cat1` has two unique values, 'A' and 'B'. The largest part of the categorical features are binaries, and in fact the categorical features from `cat1` to `cat72` have two unique values of 'A' and 'B'. Other categorical features from `cat73` to `cat76` have three unique values 'A', 'B' and 'C'. And as expected, there are also some categorical features that have more than three unique values: from `cat77` to `cat88` have 4 unique values and from `cat89` to `cat108` and `cat111`, `cat114` and `cat115` have 5 unique values or more. Almost all the categorical features consist of the single letter values as mentioned above, but some categorical features consist of 2-letter values. The features from `cat109` to `cat116` (except `cat111`, `cat114` and `cat115`) have not only single letter values but also 2-letter values like 'AA', 'AB' and 'BY'. It might be noted that 2-letter values in '\*Z' form rarely appear, and actually `cat109` barely has 'ZZ' in its values.
+</p>
+<p>&nbsp;&nbsp;
 
 </p>
+
 
 <h3>Exploratory Visualization</h3>
 <p>&nbsp;&nbsp;
@@ -107,14 +120,45 @@ Stacking is a technique to ensemble multiple Machine Learning algorithms. In sta
 
 
 <h2 align="center">Methodology</h2>
+
 <h3>Data Preprocessing</h3>
+- Factorization
+- One hot
+- Log(loss + shift)
+
+<p>&nbsp;&nbsp;
+</p>
 
 <h3>Implementation</h3>
+<p>&nbsp;&nbsp;
+</p>
 
 <h3>Refinement</h3>
+<p>&nbsp;&nbsp;
+- fair objective function
+</p>
+
+
+<h2 align="center">Results</h2>
+
+<h3>Model Evaluation and Validation</h3>
+<p>&nbsp;&nbsp;
+</p>
+
+<h3>Justification</h3>
+<p>&nbsp;&nbsp;
+</p>
 
 
 <h2 align="center">Conclusion</h2>
+
+<h3>Free-Form Visualization</h3>
+<p>&nbsp;&nbsp;
+</p>
+
+<h3>Reflection</h3>
+<p>&nbsp;&nbsp;
+</p>
 
 <h3>Improvement</h3>
 <p>&nbsp;&nbsp;

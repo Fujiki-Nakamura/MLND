@@ -1,0 +1,1 @@
+This fact might be helpful when we think about the orders of the categorical values. We have two ways to line up the categorical values: 1. Lining them up in lexicographical order ('A', 'AA', 'AB', ..., 'B', 'BA', 'BB', ..., 'ZA', 'ZB', .., 'ZZ'), and 2. Considering them as special 26-ary numbers ('A', 'B', .., 'Z', 'AA', 'AB', ..., 'ZZ'). 
