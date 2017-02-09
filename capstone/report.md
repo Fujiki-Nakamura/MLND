@@ -118,9 +118,14 @@ Stacking is a technique to ensemble multiple Machine Learning algorithms. In sta
 </p>
 
 <h4>Benchmark</h4>
-- Random Forest benchmark
-- XGB benchmark
-- NN benchmark
+<p>
+<br>&nbsp;&nbsp;
+We have three benchmarks here: Random Forest benchmark, XGBoost benchmark and Neural Network benchmark.
+</p>
+<p><b>Random Forest benchmark</b>
+<br>&nbsp;&nbsp;
+Allstate 
+</p>
 
 
 <h2 align="center">Methodology</h2>
