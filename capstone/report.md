@@ -207,11 +207,29 @@ The Neural Network benchmark is `mean MAE = 1184.39` on 5-Fold Cross Validation.
 <h2 align="center">Methodology</h2>
 
 <h3>Data Preprocessing</h3>
-- Factorization
-- One hot
-- Log(loss + shift)
-
 <p>&nbsp;&nbsp;
+Allstate has already preprocessed the data well, so there is almost no room for us to preprocess more. However, we have 3 feature preprocesses done: Log(`loss` + 200) transformation, removing some values of categorical features, Label encoding of the categorical features for XGBoost models and One hot encoding of the categorical  features for Neural Network models. All these preprocesses are done in a script `preprocess.py`.
+</p>
+<p><b>Target value `loss` transformation</b>
+<br>&nbsp;&nbsp;
+Originally, the target value `loss` has a right skewed distribution. Generally speaking, we have to have features normally distributed in regression tasks. So, we transform the `loss` into `log(loss + 200)`, which gives us a normally distributed `loss` values. This transformation is shown in the figure below: left is the original `loss` distribution and right is the `log(loss + 200)` distribution. However, the Neural Network model is not trained with this transformation and the model got better scores without the transformation.
+</p>
+
+<img src="./images/loss_histogram.png"></img>
+
+<p><b>Removing some values of categorical features</b>
+<br>&nbsp;&nbsp;
+Some categorical features have values which appear only in training data or only in test data. We remove such values and consider them as missing values. It doesn't seem helpful for our models to train with categorical values only in training data because they can't take advantage of the knowledge of the values only in training data when they predict with test data. Also, it doesn't seem helpful that our models predict with the values that they don't see at all in their training process. Therefore, we remove the categorical values that exist only in training data or test data.
+</p>
+
+<p><b>Label encoding of the categorical features</b>
+<br>&nbsp;&nbsp;
+Generally speaking, Machine Learning algorithms don't work with categorical features without any preprocess on them. So, we have to preprocess categorical features. We have two way to preprocess: Label encoding and one-hot encoding. Label encoding gives numerical labels to all classes in a categorical feature. Label encoded, `n` classes in a categorical feature is converted into the value between `0` and `n - 1`. We can keep the order of the classes in label encoding. To consider the order of the values in the categorical features, we preprocess the categorical features with label encoding for XGBoost. The order is lexicographical one (For example, A, AA, AB, ..., B, BA, BB, ..., ZZ).
+</p>
+
+<p><b>One-hot encoding of the categorical features</b>
+<br>&nbsp;&nbsp;
+On the other hand, for Neural Network models, we preprocess the categorical features with one-hot encoding. With this encoding, we get `n` dummy variables with a categorical feature which has `n` classes. In an experiment, it was found that our Neural Network models don't work well with the categorical features label encoded, but work better with one-hot encoding in this problem. Hence we preprocess the categorical features with one-hot encoding for Neural Network.
 </p>
 
 <h3>Implementation</h3>
