@@ -70,6 +70,44 @@ The categorical features are named from `cat1` to `cat116`, and they have at lea
 As mentioned above, we have 14 continuous features. All the continuous features are scaled between 0 and 1. Checking the distributions of these continuous features, it is found that the distributions of the train data is similar to that of the test data. In other word, the corresponding continuous features in those two dataset have almost the same distribution respectively. Therefore, it seems that we don't have to concern about the problem resulting from distribution differences between train data and test data. The distribution of the each continuous feature in the training data vary and is different from each other. Some of them have distributions like the gaussian (for example, `cont3`). Some of them have skewed distributions: the features like `cont6` and `cont7` have right skewed distributions. In `cont5`, the skewness of the distribution is really high and there seem to be a lot of small values in `cont5` while there are few of the larger values.
 </p>
 
+<table>
+<caption>Summary of the categorical features</caption>
+<tr>
+  <th>name</th>
+  <th>Description</th>
+  <th>Example</th>
+</tr>
+<tr>
+  <td>cat1 to cat72</td>
+  <td>Binary categorical feature</td>
+  <td>A, B</td>
+</tr>
+<tr>
+  <td>cat73 to cat76</td>
+  <td>3 values</td>
+  <td>A, B, C</td>
+</tr>
+<tr>
+  <td>cat77 to cat87</td>
+  <td>4 values</td>
+  <td>A, B, C, D</td>
+</tr>
+<tr>
+  <td>cat88</td>
+  <td>4 values without C</td>
+  <td>A, B, D, E</td>
+</tr>
+<tr>
+  <td>cat89 to cat108, cat111, cat114, cat115</td>
+  <td>5 or more values</td>
+  <td>A, B, C, D, E, etc</td>
+</tr>
+<tr>
+  <td>cat109, cat110, cat112, cat113, cat116</td>
+  <td>2-letter values also appear</td>
+  <td>A, B, AA, BA, CI, etc</td>
+</tr>
+</table>
 
 <h3>Exploratory Visualization</h3>
 <img src='./images/histogram_cont_feature.png'></img>
