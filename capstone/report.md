@@ -124,8 +124,46 @@ We have three benchmarks here: Random Forest benchmark, XGBoost benchmark and Ne
 </p>
 <p><b>Random Forest benchmark</b>
 <br>&nbsp;&nbsp;
-Allstate 
+We have a benchmark from Random Forest which Allstate might have trained before the competition. The Random Forest Benchmark scored the `MAE = 1217.52141` on the Public LeaderBoard. This benchmark is not so good, and some XGBoost models which some participants had developed had already beaten the score when I joined the competition.
 </p>
+
+<p><b>XGBoost benchmark</b>
+<br>&nbsp;&nbsp;
+The XGBoost Benchmark is about `MAE = 1114` on the Public LeaderBoard. The XGBoost model which produced the score is suggested by Vladimir Iglovikov on [his kernel of xgb 1114](https://www.kaggle.com/iglovikov/allstate-claims-severity/xgb-1114). As shown in the kernel, the hyper parameters of the benchmark model of XGBoost are `min_child_weight = 1`, `max_depth = 12`, `eta = 0.01`, `colsample_bytree = 0.5`, `subsample = 0.8`, `alpha = 1` and `gamma = 1`. Also, this model trained with the target value `loss` transformed into `log(loss + 200)`. This transformation is mentioned later. While this model scored about `MAE = 1114` on the Public LeaderBoard, the model scored `mean MAE = 1134.77` on 5-Fold Cross Validation. We start from this XGBoost model and are going to enhance the predictivity of XGBoost model.
+</p>
+
+<p><b>Neural Network benchmark</b>
+<br>&nbsp;&nbsp;
+The Neural Network benchmark is `mean MAE = 1184.39` on 5-Fold Cross Validation. The benchmark model is a simple 2-layer Neural Network. The detail of the model is shown in a script of `2_layer_v1/model.py`. The model trained with target value `loss` with no transformation.
+</p>
+
+<table>
+<caption>Benchmark Scores (MAE)</caption>
+<tr>
+  <th>Model</th>
+  <th>5-Fold Cross Validation</th>
+  <th>Public LeaderBoard</th>
+  <th>Description</th>
+</tr>
+<tr>
+  <td>Random Forest</td>
+  <td>-</td>
+  <td>1217.52</td>
+  <td>trained by Allstate</td>
+</tr>
+<tr>
+  <td>XGBoost</td>
+  <td>1134.77</td>
+  <td>1114</td>
+  <td>suggested by Vladimir Iglovikov</td>
+</tr>
+<tr>
+  <td>Neural Network</td>
+  <td>1184.39</td>
+  <td>-</td>
+  <td>2-layer simple Neural Network</td>
+</tr>
+</table>
 
 
 <h2 align="center">Methodology</h2>
