@@ -233,8 +233,41 @@ On the other hand, for Neural Network models, we preprocess the categorical feat
 </p>
 
 <h3>Implementation</h3>
+
 <p>&nbsp;&nbsp;
+
 </p>
+<p><b>Algorithms</b>
+<br>&nbsp;&nbsp;
+As we take advantage of the existing packages and libraries, we don't have complicate implementations as to the learning algorithms. We use XGBoost packages for Boosted Trees and Keras for Neural Network. Keras is really helpful and makes it easy to implement Neural Network models. The Neural Network models implemented with Keras are shown in `create_model()` functions in scripts named `model.py`. For example, the 2-layer Neural Network model for the benchmark is shown in the `create_model()` function of `2_layer_v1/model.py`.
+</p>
+
+<p><b>Metrics</b>
+<br>&nbsp;&nbsp;
+As I mentioned earlier, the metrics for this problem is MAE. However, as we transform `loss` into `log(loss + 200)` for XGBoost models, we can't compute MAE directly with predictions from the models. We need a reverse transformation. So, we have to exponentiate the values of predictions, and then we can compute MAE. The implementation looks like below and is shown in `xgb/utils.py`.
+</p>
+
+```python
+def evalerror(preds, dtrain):
+    labels = dtrain.get_label()
+    return 'mae', mean_absolute_error(np.exp(preds), np.exp(labels))
+```
+
+<p><b>Other techniques</b>
+<br>&nbsp;&nbsp;
+We implement a custom objective function for XGBoost models. It is what is called Fair objective function. `Fair objective function` plots a graph which looks like a graph by absolute value function. So, the functionality of the custom objective function is similar to MAE. However, it is different from MAE in that it is differentiable at any point (We can refer to [this page](http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/node24.html) about Fair objective function). The default objective function of XGBoost is `linear regression` and it minimizes MSE not MAE. As we don't have an appropriately objective function for minimizing MAE in the XGBoost package, we need to use `Fair objective function` as a custom objective function (and with this custom objective function, XGBoost models performed better, which is mentioned later). The implementation of `Fair objective function` looks like below and is also shown in `xgb/utils.py`.
+</p>
+
+```python
+def fair_objective(preds, dtrain):
+    labels = dtrain.get_label()
+    con = fair_obj_constant
+    x = preds - labels
+    grad = con * x / (np.abs(x) + con)
+    hess = con**2 / (np.abs(x) + con)**2
+    return grad, hess
+```
+
 
 <h3>Refinement</h3>
 <p>&nbsp;&nbsp;
