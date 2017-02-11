@@ -198,7 +198,7 @@ The Neural Network benchmark is `mean MAE = 1184.39` on 5-Fold Cross Validation.
 <tr>
   <td>Neural Network</td>
   <td>1184.39</td>
-  <td>-</td>
+  <td>not submitted</td>
   <td>2-layer simple Neural Network</td>
 </tr>
 </table>
@@ -274,7 +274,7 @@ def fair_objective(preds, dtrain):
 <h4>XGBoost</h4>
 <p><b>Hyper parameter tuning</b>
 <br>&nbsp;&nbsp;
-I tried several combinations of the hyper parameters, and found that the hyper parameters of the XGBoost benchmark is well tuned. However, more improvement was done by tuning `min_child_weight`. The `min_child_weight` work as some kind of regularization on tree building. [The document](https://github.com/dmlc/xgboost/blob/master/doc/parameter.md#parameters-for-tree-booster) says "If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning." The Large `min_child_weight` might cause under fitting because the building process ends earlier than the small one. In contrast, the small `min_child_weight` might cause overfitting because the building process don't end earlier than the large one. In this problem, tuning `min_child_weight` to `100` improved the benchmark score on Cross Validation. Perhaps `min_child_weight = 1` might be small and might cause overfitting. With `min_child_weight = 100`, the model might avoid overfitting and scored `MAE = 1133.56` on Cross Validation.
+I tried several combinations of the hyper parameters, and found that the hyper parameters of the XGBoost benchmark is well tuned. However, more improvement was done by tuning `min_child_weight`. The `min_child_weight` work as some kind of regularization on tree building. [The document](https://github.com/dmlc/xgboost/blob/master/doc/parameter.md#parameters-for-tree-booster) says "If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning." The Large `min_child_weight` might cause under fitting because the building process ends earlier than the small one. In contrast, the small `min_child_weight` might cause overfitting because the building process don't end earlier than the large one. In this problem, tuning `min_child_weight` to `100` improved the benchmark score on Cross Validation. Perhaps `min_child_weight = 1` might be small and might cause overfitting. With `min_child_weight = 100`, the model might avoid overfitting and scored `MAE = 1133.56` on Cross Validation. The hyper parameter tuning and cross validation can be done by changing parameters in `parameter.py` and executing `xgb_cv.py` in `xgb/xgb_cv/` directory.
 </p>
 
 <table>
@@ -340,7 +340,7 @@ The Cross Validation of XGBoost models are done by using the cross validation me
 <tr>
   <td>param No.1</td>
   <td>1133.56</td>
-  <td>1113.43</td>
+  <td>not submitted</td>
 </tr>
 <tr>
   <td>Fair objective, param No.1</td>
@@ -405,11 +405,41 @@ The whole model ensembled by stacking is the final model for solving the problem
 
 <h3>Model Evaluation and Validation</h3>
 <p>&nbsp;&nbsp;
+As we examine the parameters in the final model, we find that the intercept is `0.065` and the coefficient is `0.064` for the 3-layer Neural Network model, `0.052` for the 4-layer Neural Network model, `0.757` for the best XGBoost single model and `0.118` for the different random seed XGBoost model. The coefficients for the Neural Network models are relatively small and the coefficients for the XGBoost models are relatively large (especially for the best XGBoost single model). This seems reasonable in that the best XGBoost model scored the smallest MAE on the cross validations as a single model. The impact from the best single model on the final scores should be large in order to make the final scores closer to the ground truth scores. However, this doesn't mean that the Neural Network models are unnecessary in that they scored worse MAE than the XGBoost models. They helped the level 2 model in stacking predict more accurately. In fact, the level 2 Linear Regression model scored the smaller MAE than the best XGBoost single model.
 </p>
 
 <h3>Justification</h3>
 <p>&nbsp;&nbsp;
+The result is that the final model performed better than any benchmark. It seems difficult to say that the final model performed significantly better in rigorous sense. However, the performance of the final model can be justified as we see the result history on the LeaderBoard. In addition to the fact that the final model performed better than the best benchmark model on the cross validation, it performed better on Public LeaderBoard. Moreover, it got the better score on the Private LeaderBoard. In that the final model outperformed the benchmark model in three different testing environment, it can be said that the final model performed significantly better than the benchmark and it is significant enough to solve this problem. The final model is likely to generalize well to unseen data.
 </p>
+
+<table>
+<caption>Refinement history on LeaderBoard</caption>
+<tr>
+  <th>Model</th>
+  <th>5-Fold Cross Validation</th>
+  <th>Public Leader Board</th>
+  <th>Private Leader Board</th>
+</tr>
+<tr>
+  <td>XGBoost benchmark</td>
+  <td>1134.77</td>
+  <td>1114.16</td>
+  <td>1128.57</td>
+</tr>
+<tr>
+  <td>Best XGBoost model</td>
+  <td>1132.18</td>
+  <td>1113.43</td>
+  <td>1128.26</td>
+</tr>
+<tr>
+  <td>Final model</td>
+  <td>1130.37</td>
+  <td>1111.96</td>
+  <td>1124.68</td>
+</tr>
+</table>
 
 
 <h2 align="center">Conclusion</h2>
