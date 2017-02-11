@@ -167,12 +167,12 @@ We have a benchmark from Random Forest which Allstate might have trained before 
 
 <p><b>XGBoost benchmark</b>
 <br>&nbsp;&nbsp;
-The XGBoost Benchmark is about `MAE = 1114` on the Public LeaderBoard. The XGBoost model which produced the score is suggested by Vladimir Iglovikov on [his kernel of xgb 1114](https://www.kaggle.com/iglovikov/allstate-claims-severity/xgb-1114). As shown in the kernel, the hyper parameters of the benchmark model of XGBoost are `min_child_weight = 1`, `max_depth = 12`, `eta = 0.01`, `colsample_bytree = 0.5`, `subsample = 0.8`, `alpha = 1` and `gamma = 1`. Also, this model trained with the target value `loss` transformed into `log(loss + 200)`. This transformation is mentioned later. While this model scored about `MAE = 1114` on the Public LeaderBoard, the model scored `mean MAE = 1134.77` on 5-Fold Cross Validation. We start from this XGBoost model and are going to enhance the predictivity of XGBoost model.
+The XGBoost Benchmark is about `MAE = 1114.16` on the Public LeaderBoard. The XGBoost model which produced the score is suggested by Vladimir Iglovikov on [his kernel of xgb 1114](https://www.kaggle.com/iglovikov/allstate-claims-severity/xgb-1114). As shown in the kernel, the hyper parameters of the benchmark model of XGBoost are `min_child_weight = 1`, `max_depth = 12`, `eta = 0.01`, `colsample_bytree = 0.5`, `subsample = 0.8`, `alpha = 1` and `gamma = 1`. Also, this model trained with the target value `loss` transformed into `log(loss + 200)`. This transformation is mentioned later. While this model scored about `MAE = 1114.16` on the Public LeaderBoard, the model scored `mean MAE = 1134.77` on 5-Fold Cross Validation. We start from this XGBoost model and are going to enhance the predictivity of XGBoost model.
 </p>
 
 <p><b>Neural Network benchmark</b>
 <br>&nbsp;&nbsp;
-The Neural Network benchmark is `mean MAE = 1184.39` on 5-Fold Cross Validation. The benchmark model is a simple 2-layer Neural Network. The detail of the model is shown in a script of `2_layer_v1/model.py`. The model trained with target value `loss` with no transformation.
+The Neural Network benchmark is `mean MAE = 1184.39` on 5-Fold Cross Validation. The benchmark model is a simple 2-layer Neural Network. The First layer has 128 units followed by the ReLU activation and the second layer (, which is the output layer) has 1 unit. The detail of the model is shown in a script of `2_layer_v1/model.py`. The model trained with target value `loss` with no transformation.
 </p>
 
 <table>
@@ -192,7 +192,7 @@ The Neural Network benchmark is `mean MAE = 1184.39` on 5-Fold Cross Validation.
 <tr>
   <td>XGBoost</td>
   <td>1134.77</td>
-  <td>1114</td>
+  <td>1114.16</td>
   <td>suggested by Vladimir Iglovikov</td>
 </tr>
 <tr>
@@ -270,8 +270,134 @@ def fair_objective(preds, dtrain):
 
 
 <h3>Refinement</h3>
+
+<h4>XGBoost</h4>
+<p><b>Hyper parameter tuning</b>
+<br>&nbsp;&nbsp;
+I tried several combinations of the hyper parameters, and found that the hyper parameters of the XGBoost benchmark is well tuned. However, more improvement was done by tuning `min_child_weight`. The `min_child_weight` work as some kind of regularization on tree building. [The document](https://github.com/dmlc/xgboost/blob/master/doc/parameter.md#parameters-for-tree-booster) says "If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning." The Large `min_child_weight` might cause under fitting because the building process ends earlier than the small one. In contrast, the small `min_child_weight` might cause overfitting because the building process don't end earlier than the large one. In this problem, tuning `min_child_weight` to `100` improved the benchmark score on Cross Validation. Perhaps `min_child_weight = 1` might be small and might cause overfitting. With `min_child_weight = 100`, the model might avoid overfitting and scored `MAE = 1133.56` on Cross Validation.
+</p>
+
+<table>
+<tr>
+  <th>Description</th>
+  <th>min_child_weight</th>
+  <th>max_depth</th>
+  <th>eta</th>
+  <th>colsample_bytree</th>
+  <th>subsample</th>
+  <th>alpha</th>
+  <th>lambda</th>
+  <th>gamma</th>
+  <th>mean MAE on 5-Fold Cross Validation</th>
+</tr>
+<tr>
+  <td>Benchmark</td>
+  <td>1</td>
+  <td>12</td>
+  <td>0.01</td>
+  <td>0.5</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1134.77</td>
+</tr>
+<tr>
+  <td>param No.1</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.01</td>
+  <td>0.5</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1133.56</td>
+</tr>
+</table>
+
+<p><b>Custom objective function</b>
+<br>&nbsp;&nbsp;
+As I mentioned earlier, we use a custom objective function called `Fair objective function`. With this objective function, the XGBoost model scored better MAE than the benchmark. The model's hyper parameter is `No.1` and `mean MAE = 1132.18` on 5-Fold Cross Validation. This refined model improved the benchmark score by `-2.59`. As the model improved the score on Cross Validation, I submitted the this model's predictions for the test data and got `MAE = 1113.43` on Public LeaderBoard, which slightly improved the benchmark score on Public LeaderBoard.
+</p>
+
 <p>&nbsp;&nbsp;
-- fair objective function
+The Cross Validation of XGBoost models are done by using the cross validation method build in the XGBoost package.
+</p>
+
+<table>
+<caption>Refinement history of the XGBoost models</caption>
+<tr>
+  <th>Description</th>
+  <th>mean MAE on 5-fold Cross Validation</th>
+  <th>MAE on Public Leaderboard</th>
+</tr>
+<tr>
+  <td>XGBoost Benchmark</td>
+  <td>1134.77</td>
+  <td>1114.16</td>
+</tr>
+<tr>
+  <td>param No.1</td>
+  <td>1133.56</td>
+  <td>1113.43</td>
+</tr>
+<tr>
+  <td>Fair objective, param No.1</td>
+  <td>1132.18</td>
+  <td>1113.43</td>
+</tr>
+</table>
+
+<h4>Neural Network</h4>
+<p>&nbsp;&nbsp;
+In order to create more predictive Neural Network models, we use simple strategy of increasing layers of the Network.
+</p>
+
+<p><b>3-layer architecture</b>
+<br>&nbsp;&nbsp;
+I added one more layer to the 2-layer Neural Network and create a 3-layer Neural Network. The first layer of the Network has 128 units followed by ReLU activation, the second layer has 64 units followed by ReLU activation and the last layer is the output layer of single unit. The detail is shown in `3_layer_v1/model.py`.
+</p>
+<p>&nbsp;&nbsp;
+The 3-layer Neural Network model performed better than the benchmark. It scored `MAE = 1163.72` on 5-Fold Cross Validation, which improved the benchmark score by `-20.67`.
+</p>
+
+<p><b>4-layer architecture</b>
+<br>&nbsp;&nbsp;
+To enhance the predictive ability of the 3-layer Neural Network model, I added one more layer to it and created a 4-layer Neural Network model. The first layer has 128 units followed by ReLU activation, the second layer has 64 units followed by ReLU activation, the third layer has 32 units followed by ReLU activation and the last layer is single unit output layer. The detail is shown in `4_layer_v1/model.py`.
+</p>
+<p>&nbsp;&nbsp;
+The 4-layer Neural Network model performed better than the 3-layer Neural Network model (hence performed better than the benchmark of course). It scored `MAE = 1161.83` on Cross Validation, which means it improved the 3-layer model score by `-1.89`.
+</p>
+
+<table>
+<caption>Refinement history of the Neural Network models</caption>
+<tr>
+  <th>Description</th>
+  <th>mean MAE on 5-fold Cross Validation</th>
+</tr>
+<tr>
+  <td>2-layer, benchmark</td>
+  <td>1184.39</td>
+</tr>
+<tr>
+  <td>3-layer</td>
+  <td>1163.72</td>
+</tr><tr>
+  <td>4-layer</td>
+  <td>1161.83</td>
+</tr>
+</table>
+
+<h4>Stacking</h4>
+<p>&nbsp;&nbsp;
+In order to get even better results, we ensemble the models refined above by the method of stacking. Level 1 models for stacking are the best XGBoost model (Fair objective function, the hyper parameter No.1), the 3-layer Neural Network and the 4-layer Neural Network. In addition to those models, I prepared one more XGBoost model for stacking. The new XGBoost model is almost the same as the best XGBoost model but it has a different random seed. The preparation for stacking with this XGBoost model is done in `xgb/xgb_v2/stacking.py`.
+</p>
+<p>&nbsp;&nbsp;
+For Level 2 model for stacking, I selected a simple model, that is Linear Regression. Using out-of-fold predictions of the level 1 models as features and `log(loss + 200)` as a target value, the Level 2 model scored `MAE = 1130.37` on 5-Fold Cross Validation. It beat the best single model score on the cross validation (`MAE = 1132.18`), which produced by the XGBoost model with Fair objective function and the hyper parameter No.1, and improved the score by `-1.81`.
+</p>
+<p>&nbsp;&nbsp;
+The whole model ensembled by stacking is the final model for solving the problem. The stacking process above was done in `level_2_model/linear_regression.ipynb`.
 </p>
 
 
