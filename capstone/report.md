@@ -1,6 +1,6 @@
 <h1>Capstone Project</h1>
 <h2>Machine Learning Engineer Nanodegree</h2>
-<p align="right">Fujiki Nakamura</p>
+<h4 align="right">Fujiki Nakamura</h4>
 
 
 <h2 align="center">Definition</h2>
@@ -276,6 +276,9 @@ def fair_objective(preds, dtrain):
 <br>&nbsp;&nbsp;
 I tried several combinations of the hyper parameters, and found that the hyper parameters of the XGBoost benchmark is well tuned. However, more improvement was done by tuning `min_child_weight`. The `min_child_weight` work as some kind of regularization on tree building. [The document](https://github.com/dmlc/xgboost/blob/master/doc/parameter.md#parameters-for-tree-booster) says "If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning." The Large `min_child_weight` might cause under fitting because the building process ends earlier than the small one. In contrast, the small `min_child_weight` might cause overfitting because the building process don't end earlier than the large one. In this problem, tuning `min_child_weight` to `100` improved the benchmark score on Cross Validation. Perhaps `min_child_weight = 1` might be small and might cause overfitting. With `min_child_weight = 100`, the model might avoid overfitting and scored `MAE = 1133.56` on Cross Validation. The hyper parameter tuning and cross validation can be done by changing parameters in `parameter.py` and executing `xgb_cv.py` in `xgb/xgb_cv/` directory.
 </p>
+<p/>&nbsp;&nbsp;
+One parameters combination is shown below, but more trial and errors were done in fact. To keep this section shown neatly, I put those trial and errors at the last part of this report.
+</p>
 
 <table>
 <tr>
@@ -450,11 +453,45 @@ The result is that the final model performed better than any benchmark. It seems
 
 <h3>Reflection</h3>
 <p>&nbsp;&nbsp;
+Summarizing the entire end-to-end problem solution, we built some predictive single models and then ensembled them by stacking. Ensembling single models by stacking might not be so tough because the theory ensures more generalized result in higher levels. The difficult part of this problem for me might be to make powerful single models. I tried a lot of experiment on the hyper parameter tuning of XGBoost models, but hardly got good results. To be able to tune the hyper parameters well manually, we have to have good knowledge of the algorithms of the models. Or we could take advantage of some searching method like random search instead.
+</p>
+<p>&nbsp;&nbsp;
+The final model fit my expectations for this problem and showed the performance better than single models. When we definitely want to make powerful predictive models, solutions like the final model (i.e. model ensembling by stacking) must be helpful. However, I don't think that the final solution is necessarily perfect in all aspects for problems similar to this one. Sometimes we might not be able to have large and complicate models because of limitations on computational resources, the cost of the maintenance of the models and so on. Under such circumstances, we might want models less complicate and slightly less predictive but still predictive enough to solve our problems. This is a kind of trade off problems. The method of stacking seems powerful to solve problems on competitions (, in which we aim to make our models more predictive than other participants), but in general settings, especially in business settings, we might have to consider some trade off problems and make modifications to fit models practically in the settings.
 </p>
 
 <h3>Improvement</h3>
 <p>&nbsp;&nbsp;
-Although there is almost no room for feature engineering, we might get better performance by handling some features more appropriately. One example is about cont2, which is a numerical feature but seems to be converted from a categorical feature (it might represent something like age groups). Because it seems to be originally a categorical feature, we could re-convert and consider it as a categorical one, which might lead to the better performances of the models.
+One aspect that could be improved is about feature engineering. Although there is almost no room for feature engineering, we might get better performance by handling some features more appropriately. One example is about `cont2`, which is a numerical feature but seems to be converted from a categorical feature (It is said to represent something like age groups). Because it seems to be originally a categorical feature, we could re-convert and consider it as a categorical one, which might lead to the better performances of the models.
+</p>
+<p>&nbsp;&nbsp;
+Another aspect is about stacking. Although we have two different Machine Learning models above, we could have had more models in our 1st level. As we see in [#1st Place Solution](https://www.kaggle.com/c/allstate-claims-severity/discussion/26416), competent kagglers have a lot of models in their 1st level and ensemble them. One algorithm which seems interesting for solving this problem is `LightGBM`. One of the competition forum post mentions the competence of LightGBM and it seems that LightGBM also works well on this problem ([LightGBM LB 1112.XX](https://www.kaggle.com/c/allstate-claims-severity/forums/t/25268/lightgbm-lb-1112-xx)). So, we could have used `LightGBM` and made our stacking process more powerful. Also about stacking, we could have had more levels. We have 2 levels in the stacking process, but by using the same method as the 1st level on the 2nd level we can create the 3rd level. If we have more levels in stacking, we might get more generalized models.
+</p>
 
-- try LightGBM and other algorithms and add them also into stacking process. One of the competition forum post mentions the competence of LightGBM and it seems that LightGBM also works well on this problem ([LightGBM LB 1112.XX](https://www.kaggle.com/c/allstate-claims-severity/forums/t/25268/lightgbm-lb-1112-xx)).
-- more complicate architecture of NN
+
+<h2 align="center">Appendix</h2>
+<table>
+<caption>Trial and errors on hyper parameter tuning of XGBoost model</caption>
+<tr>
+  <th>Description</th>
+  <th>min_child_weight</th>
+  <th>max_depth</th>
+  <th>eta</th>
+  <th>colsample_bytree</th>
+  <th>subsample</th>
+  <th>alpha</th>
+  <th>lambda</th>
+  <th>gamma</th>
+  <th>mean MAE on 5-Fold Cross Validation</th>
+</tr>
+<tr>
+  <td>Benchmark</td>
+  <td>1</td>
+  <td>12</td>
+  <td>0.01</td>
+  <td>0.5</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1134.77</td>
+</tr>
