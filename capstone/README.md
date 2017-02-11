@@ -1,27 +1,31 @@
 ## Capstone project
 ### How to Start
 ```shell
-git clone https://github.com/Fujiki-Nakamura/MLND.git
-```
-```shell
-cd MLND/capstone/
-```
-```shell
-mkdir data
+$ git clone https://github.com/Fujiki-Nakamura/MLND.git
+$ cd MLND/capstone/
+$ mkdir data
 ```
 
-## Requirements
+
+### Requirements
+#### Data
 This project requires [Allstate Claims Severity competition](https://www.kaggle.com/c/allstate-claims-severity/) data.
 <br>Download data from [here](https://www.kaggle.com/c/allstate-claims-severity/data) and place them under the `data/` directry.
 <br>If you have data correctly, it should look like:
-<br>`data/train.csv`
-<br>`data/test.csv`
+```
+data/train.csv
+data/test.csv
+```
 
-## Preprocess
+#### Environment
 ```shell
-cd capstone
+$ conda env create --file conda_env.yaml
 ```
+
+
+### Data Preparation
 ```shell
-python preprocess.py
+$ python preprocess.py
 ```
-This creates preprocessed data in `data/` directory.
+Based on the train and test data you got above, this creates preprocessed data in `data/` directory.
+<br>They are necessary for Machine Learning models.
