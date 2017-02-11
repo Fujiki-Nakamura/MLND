@@ -74,4 +74,4 @@ $ python stacking.py 4_layer_v1
 ```
 
 #### Linear Regression for Level 2 model in stacking
-Execute cell in `level_2_model/linear_regression.ipynb`.
+Execute cells in `level_2_model/linear_regression.ipynb`.
