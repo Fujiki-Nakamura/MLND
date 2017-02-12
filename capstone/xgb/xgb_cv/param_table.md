@@ -1,0 +1,198 @@
+<table>
+<caption>Trial and errors on hyper parameter tuning of XGBoost model</caption>
+
+<tr>
+  <th>Description</th>
+  <th>min_child_weight</th>
+  <th>max_depth</th>
+  <th>eta</th>
+  <th>colsample_bytree</th>
+  <th>subsample</th>
+  <th>alpha</th>
+  <th>lambda</th>
+  <th>gamma</th>
+  <th>MAE on 5-Fold Cross Validation</th>
+</tr>
+
+<tr>
+  <td>Benchmark</td>
+  <td>1</td>
+  <td>12</td>
+  <td>0.01</td>
+  <td>0.5</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1134.77</td>
+</tr>
+
+<tr>
+  <td>No.1</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.01</td>
+  <td>0.5</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1133.56</td>
+</tr>
+
+<tr>
+  <td>No.2</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.01</td>
+  <td>0.5</td>
+  <td>0.5</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1135.99</td>
+</tr>
+
+<tr>
+  <td>No.3</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.03</td>
+  <td>0.7</td>
+  <td>0.7</td>
+  <td>0</td>
+  <td>1</td>
+  <td>0</td>
+  <td>1136.94</td>
+</tr>
+
+<tr>
+  <td>No.4</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.03</td>
+  <td>0.5</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1135.22</td>
+</tr>
+
+<tr>
+  <td>No.5</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.02</td>
+  <td>0.5</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1134.17</td>
+</tr>
+
+<tr>
+  <td>No.6</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.02</td>
+  <td>1</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1136.05</td>
+</tr>
+
+<tr>
+  <td>No.7</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.1</td>
+  <td>1</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1143.03</td>
+</tr>
+
+<tr>
+  <td>No.8</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.1</td>
+  <td>0.5</td>
+  <td>0.8</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1142.27</td>
+</tr>
+
+<tr>
+  <td>No.9</td>
+  <td>100</td>
+  <td>12</td>
+  <td>0.03</td>
+  <td>0.5</td>
+  <td>0.7</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1135.72</td>
+</tr>
+
+<tr>
+  <td>No.10</td>
+  <td>100</td>
+  <td>20</td>
+  <td>0.03</td>
+  <td>0.5</td>
+  <td>0.7</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1136.61</td>
+</tr>
+
+<tr>
+  <td>No.11</td>
+  <td>100</td>
+  <td>6</td>
+  <td>0.03</td>
+  <td>0.5</td>
+  <td>0.7</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1137.29</td>
+</tr>
+
+<tr>
+  <td>No.12</td>
+  <td>200</td>
+  <td>12</td>
+  <td>0.03</td>
+  <td>0.5</td>
+  <td>0.7</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1136.50</td>
+</tr>
+
+<tr>
+  <td>No.13</td>
+  <td>50</td>
+  <td>12</td>
+  <td>0.03</td>
+  <td>0.5</td>
+  <td>0.7</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1136.05</td>
+</tr>
+</table>
