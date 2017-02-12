@@ -2,3 +2,5 @@
 */.ipynb_checkpoints/
 __MACOSX/
 *.pyc
+*data/
+MLNDEnv/
