@@ -1,4 +1,4 @@
-<h1>Capstone Project</h1>
+<h1><font color="DodgerBlue">Capstone Project</font></h1>
 <h2>Machine Learning Engineer Nanodegree</h2>
 <h4 align="right">Fujiki Nakamura</h4>
 
@@ -10,7 +10,7 @@
 In this project, I solve a problem provided by Kaggle. Kaggle is a Data Science competition platform and provide their competitors with a lot of data in real world. Many companies are working with Kaggle and sharing their data on the platform of Kaggle to discover the methods that produce the best result and the talented competitors. Competitors at Kaggle make the most of their Data Analysis and Machine Learning skills and aim to win their competitions. Kaggle is also a platform of learning practical skills of Data Science and helps many junior Data Scientists advance their skills providing discussions on the forum and open scripts.
 </p>
 <p>&nbsp;&nbsp;
-The problem I solve in this project is provided by AllState corporation, which is [the second largest personal insurer in the United States](https://en.wikipedia.org/wiki/Allstate). They provide their data including the information of how severe an insurance claim is and other information that can be useful to predict the severity. According to the Kaggle [home page of this] competition(https://www.kaggle.com/c/allstate-claims-severity), they are "currently developing automated methods of predicting the cost, and hence severity, of claims" and looking for the talented competitors to recruit.
+The problem I solve in this project is provided by AllState corporation, which is [the second largest personal insurer in the United States](https://en.wikipedia.org/wiki/Allstate). They provide their data including the information of how severe an insurance claim is and other information that can be useful to predict the severity. According to the Kaggle [home page of this competition](https://www.kaggle.com/c/allstate-claims-severity), they are "currently developing automated methods of predicting the cost, and hence severity, of claims" and looking for the talented competitors to recruit.
 </p>
 <p>&nbsp;&nbsp;
 The objective for this project is not recruitment, but through this problem I provide a case study of developing automated methods to produce good predictions.
@@ -438,7 +438,10 @@ The result is that the final model performed better than any benchmark. It seems
 <h2 align="center">Conclusion</h2>
 
 <h3>Free-Form Visualization</h3>
+<img src="./images/stacking.png"></img>
+
 <p>&nbsp;&nbsp;
+One of the important parts of this project is mainly about stacking. After we had several single models, we ensembled them by stacking. The 1st level models in stacking were those single models. We trained them on the dataset and obtained the 4 predictions. Then we trained the 2nd level model, which was Linear Regression, on top of them. The 2nd level model learned by taking the predictions from the previous level as its inputs. The prediction from 2nd level model was the final output. And as a whole, we obtained the more generalized result and hence got the more accurate predictions.
 </p>
 
 <h3>Reflection</h3>
