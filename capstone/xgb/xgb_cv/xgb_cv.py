@@ -63,7 +63,7 @@ if __name__ == '__main__':
            show_stdv=True,
            feval=evalerror,
            maximize=False,
-           obj=fair_objective)
+           obj=fair_objective)  # if not using a custom objective function, remove this option.
     print('CV in ', time.time() - t0)
     cv.to_csv(result_directory + 'cross_validation.csv')
     print('End Cross Validation')
