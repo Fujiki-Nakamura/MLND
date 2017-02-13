@@ -297,6 +297,10 @@ def fair_objective(preds, dtrain):
     return grad, hess
 ```
 
+<p>&nbsp;&nbsp;
+The implementation of the custom function was some kind of complicate thing. The default objective function for XGBoost is `reg:linear` and it tries to optimize `MSE` not `MAE`. So, we needed other objective functions to train XGBoost models appropriately and got the `Fair objective function`. Applying this function to our XGBoost models might be complicate. We have to know how XGBoost optimizes its given loss function. It is documented in [the introducing document](http://xgboost.readthedocs.io/en/latest/model.html). Also, we have to know how to implement the function appropriately in XGBoost. We have to get the first and second order derivative of the function, not the function itself, as shown above.
+</p>
+
 
 <h3>Refinement</h3>
 
@@ -408,7 +412,7 @@ As we examine the parameters in the final model, we find that the intercept is `
 
 <h3>Justification</h3>
 <p>&nbsp;&nbsp;
-The result is that the final model performed better than any benchmark. It seems difficult to say that the final model performed significantly better in rigorous sense. However, the performance of the final model can be justified as we see the result history on the LeaderBoard. In addition to the fact that the final model performed better than the best benchmark model on the cross validation, it performed better on the Public LeaderBoard. Moreover, it got the better score on the Private LeaderBoard. In that the final model outperformed the benchmark model in three different testing environment, it can be said that the final model performed significantly better than the benchmark. And it seems that the final model is significant enough to solve this problem because the model performed well in all of the evaluating environment above. The final model got the better performance in the cross validation, and (as expected) also in the Public LeaderBoard. That is, the performance of the model doesn't seem a coincidence. In addition to that, finally, it got the better performance in the Private LeaderBoard. So, those facts convince us of the models' unchanged ability to solve the problem. So,  I think the model is robust enough and it is likely to generalize well to unseen data. 
+The result is that the final model performed better than any benchmark. It seems difficult to say that the final model performed significantly better in rigorous sense. However, the performance of the final model can be justified as we see the result history on the LeaderBoard. In addition to the fact that the final model performed better than the best benchmark model on the cross validation, it performed better on the Public LeaderBoard. Moreover, it got the better score on the Private LeaderBoard. In that the final model outperformed the benchmark model in three different testing environment, it can be said that the final model performed significantly better than the benchmark. And it seems that the final model is significant enough to solve this problem because the model performed well in all of the evaluating environment above. The final model got the better performance in the cross validation, and (as expected) also in the Public LeaderBoard. That is, the performance of the model doesn't seem a coincidence. In addition to that, finally, it got the better performance in the Private LeaderBoard. So, those facts convince us of the models' unchanged ability to solve the problem. So,  I think the model is robust enough and it is likely to generalize well to unseen data.
 </p>
 
 <table>
